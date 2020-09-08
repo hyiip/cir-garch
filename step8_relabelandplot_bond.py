@@ -36,13 +36,13 @@ def plotGraphSetting(params,result,setting,itemmode):
         suffix = "(SD = {}, MA = {})".format(SD, MA)
     if itemmode == "upper":
         title = {
-            "stdtit": "{}, moving average and S_U (Quasi-bounded){}".format(item, suffix),
+            "stdtit": "{}, moving average and quasi-bounded fixed at S_U {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
     elif itemmode == "lower":
         title = {
-            "stdtit": "{}, moving average, S_U (Inaccessible){}".format(item, suffix),
+            "stdtit": "{}, moving average, quasi-bounded fixed at zero {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
@@ -83,7 +83,7 @@ def plotGraphSetting(params,result,setting,itemmode):
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("S/S_A", fontsize = fontsize)
-        ax1.right_ax.set_ylim(0,2)
+        ax1.right_ax.set_ylim(0,4)
     if "bond" in itemType:
         ylabalT = "Bond Yield"
     elif "vix" in itemType:
@@ -125,9 +125,9 @@ def plotGraphParameter(params,result,parameter,itemmode):
         suffix = "(SD = {}, MA = {})".format(SD, MA)
 
     if itemmode == "upper":
-        title = "{}ing windows, S_U is quasi-bounded, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
+        title = "{}ing windows, quasi-bounded fixed at S_U, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
     elif itemmode == "lower":
-        title = "{}ing windows, S_U is inaccessible, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
+        title = "{}ing windows, quasi-bounded fixed at zero, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
     else:
         title = "{}ing windows, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
 
@@ -228,11 +228,10 @@ def relabelAndPlot(params):
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
             infographName = "{}_SD{}day{}".format(item,SDint,day)
-        elif "exchange" not in itemType:
+        elif "exchange" in itemType:
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}".format(mode,item)
             infographName = "{}".format(item)
-
         else:
             resultFile = "{}_{}_day{}_SD{}_{}.csv".format(mode,itemmode,MA,SD,item)
             graphName = "{}_{}_{}_SD{}day{}".format(mode,itemmode,item,SDint,day)
@@ -259,6 +258,7 @@ def relabelAndPlot(params):
         fig = plotGraphParameter(params,result, var,itemmode)
         fig.savefig(filepath["graph"] + "{}_{}.png".format(graphName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.png".format(graphName,var) )
+        fig.savefig(filepath["output_graph"] + "{}_{}.eps".format(graphName,var), format='eps' )
     
     if itemType == "exchange":
         setting = ["main","s","leakage"]
@@ -269,6 +269,7 @@ def relabelAndPlot(params):
         fig = plotGraphSetting(params,result, var,itemmode)
         fig.savefig(filepath["graph"] + "{}_{}.png".format(infographName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.png".format(infographName,var) )
+        fig.savefig(filepath["output_graph"] + "{}_{}.eps".format(infographName,var), format='eps' )
     print(params)
     '''
     lws = [1.5, 2, 1.25]
@@ -354,7 +355,7 @@ def tablePlot(params):
 
 def merger(itemType , region,mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region,mode = "plot")
-    modeList = ["roll","expand"]
+    modeList = ["roll"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
 
     cpuCount = multiprocessing.cpu_count()
@@ -367,11 +368,11 @@ def merger(itemType , region,mode="hybrid"):
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["default"]:
-        #itemType = "bond{mode}".format(mode=mode)
-        #region = "GER"
-        itemType = "vixir"
-        region = ""
+    for mode in ["lower"]:
+        itemType = "bond{mode}".format(mode=mode)
+        region = "GER"
+        #itemType = "vixir"
+        #region = ""
         merger(itemType,region, mode = mode)
     #itemType = "bondfloat3"
     #region = "GER"

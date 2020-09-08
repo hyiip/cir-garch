@@ -59,6 +59,7 @@ def setUSDHKD(itemType):
     print("USDHKD set")
 
 def processRaw(params,itemType, mode = "curr"):
+    print(mode)
     item = params[0]
     SD = params[1]
     day = params[2]
@@ -217,8 +218,8 @@ def updateRaw(itemType,region,mode):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
-#for mode in ["lower"]:
-    itemType = "exchange"
-    region = ""
-    updateRaw(itemType,region, mode = "exchange")
+    for mode in ["lower"]:
+        itemType = "bond{mode}".format(mode = mode)
+        region = "GER"
+        updateRaw(itemType,region, mode = mode)
 

@@ -33,12 +33,15 @@ def matlabRun(params):
         mode = ""
     else:
         mode = mode + "_"
-    #print(SD,day,offset,item,itemType,mode)
+    inp = (rollexpand,SD,day,offset,item,itemType,mode)
+    print(inp)
     eng = matlab.engine.start_matlab()
+    
     if not epsilon == 0:
         eng.CIR_MLE(SD,day,offset,item,itemType,epsilon)
     else:
         eng.CIR_MLE2(rollexpand,SD,day,offset,item,itemType,mode)
+    eng.quit()
 
 def matlabBatch(itemType,region,mode="hybrid"):
     start = time.time()
@@ -46,7 +49,7 @@ def matlabBatch(itemType,region,mode="hybrid"):
     #dayList = [30,50,60,90,120]
     #indexList = getItemNameFromJson(itemType,region)
     tempList = getParameterListFromJson(itemType,region)
-    modeList = ["roll", "expand"]
+    modeList = ["roll"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
     #withTypeList = [(n,s,d,itemType + region) for n, s, d in paramList]
     #paramList = (("2319.HK",2,30,"stockHK"),("2319.HK",2,60,"stockHK"))
@@ -64,7 +67,7 @@ def matlabBatch(itemType,region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    for mode in ["default"]:
-        itemType = "exchange"
-        region = ""
+    for mode in ["lower"]:
+        itemType = "bond{}".format(mode)
+        region = "GER"
         matlabBatch(itemType,region, mode = mode)

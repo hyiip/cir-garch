@@ -141,7 +141,7 @@ def resultmerge(params):
     
 def resultMerger(itemType , region,mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region)
-    modeList = ["roll", "expand"]
+    modeList = ["roll"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
     for param in paramList:
         resultmerge(param)
@@ -150,7 +150,7 @@ def resultMerger(itemType , region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["default"]:
-        itemType = "vixir"
-        region = ""
+    for mode in ["lower"]:
+        itemType = "bond{mode}".format(mode = mode)
+        region = "GER"
         resultMerger(itemType,region, mode = mode)
