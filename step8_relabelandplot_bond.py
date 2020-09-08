@@ -59,7 +59,7 @@ def plotGraphSetting(params,result,setting,itemmode):
             else:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
-            data = result[[result.columns[0], "{}MA".format(MA)]]
+            data = result[[result.columns[0]]]
         else:
             data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         ax1 = data.plot(title = title["stdtit"], grid=True, fontsize=fontsize, figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
@@ -260,7 +260,11 @@ def relabelAndPlot(params):
         fig.savefig(filepath["graph"] + "{}_{}.png".format(graphName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.png".format(graphName,var) )
     
-    setting = ["main","s","leakage","normalize"]
+    if itemType == "exchange":
+        setting = ["main","s","leakage"]
+    else:
+        setting = ["main","s","leakage","normalize"]
+    
     for var in setting:
         fig = plotGraphSetting(params,result, var,itemmode)
         fig.savefig(filepath["graph"] + "{}_{}.png".format(infographName,var) )
