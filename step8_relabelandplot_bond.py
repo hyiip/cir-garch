@@ -28,7 +28,9 @@ def plotGraphSetting(params,result,setting,itemmode):
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
-    if epsilon != 0:
+    if itemType == "exchange":
+        suffix = ""
+    elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
@@ -56,6 +58,8 @@ def plotGraphSetting(params,result,setting,itemmode):
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U"]]
             else:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
+        elif itemType == "exchange":
+            data = result[[result.columns[0], "{}MA".format(MA)]]
         else:
             data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         ax1 = data.plot(title = title["stdtit"], grid=True, fontsize=fontsize, figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
@@ -113,7 +117,9 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data = result[[parameter, parameter + "_z"]]
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
-    if epsilon != 0:
+    if itemType == "exchange":
+        suffix = ""
+    elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
@@ -203,16 +209,30 @@ def relabelAndPlot(params):
         graphName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
         infographName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
-        filepath = {
-            "graph": "{}/updating/graph/{}/SD{}day{}/{}/".format(itemType,item,SDint,day,mode),
-            "result": "{}/updating/result/SD{}/day{}/{}/".format(itemType,SD,day,mode),
-            "output_graph": "output/{itemType}/graph/{item}/day{day}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
-            "output_result": "output/{itemType}/result/{item}/day{day}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
-            }
+        if not "exchange" == itemType:
+            filepath = {
+                "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
+                "result": "{itemType}/updating/result/SD{SD}/day{day}/{mode}/".format(itemType = itemType,SD = SD,day = day,mode = mode),
+                "output_graph": "output/{itemType}/graph/{item}/day{day}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
+                "output_result": "output/{itemType}/result/{item}/day{day}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
+                }
+        else:
+            filepath = {
+                "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
+                "result": "{itemType}/updating/result/SD{SD}/day{day}/{mode}/".format(itemType = itemType,SD = SD,day = day,mode = mode),
+                "output_graph": "output/{itemType}/graph/{item}/{mode}/".format(itemType = itemType,item = item,mode = mode),
+                "output_result": "output/{itemType}/result/{item}/{mode}/".format(itemType = itemType,item = item,mode = mode),
+                }
+
         if "bond" not in itemType:
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
             infographName = "{}_SD{}day{}".format(item,SDint,day)
+        elif "exchange" not in itemType:
+            resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            graphName = "{}_{}".format(mode,item)
+            infographName = "{}".format(item)
+
         else:
             resultFile = "{}_{}_day{}_SD{}_{}.csv".format(mode,itemmode,MA,SD,item)
             graphName = "{}_{}_{}_SD{}day{}".format(mode,itemmode,item,SDint,day)
@@ -330,7 +350,7 @@ def tablePlot(params):
 
 def merger(itemType , region,mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region,mode = "plot")
-    modeList = ["roll"]
+    modeList = ["roll","expand"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
 
     cpuCount = multiprocessing.cpu_count()
@@ -346,7 +366,7 @@ if __name__ == '__main__':
     for mode in ["default"]:
         #itemType = "bond{mode}".format(mode=mode)
         #region = "GER"
-        itemType = "vix"
+        itemType = "exchange"
         region = ""
         merger(itemType,region, mode = mode)
     #itemType = "bondfloat3"

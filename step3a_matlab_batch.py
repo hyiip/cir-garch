@@ -65,6 +65,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
     for mode in ["default"]:
-        itemType = "vixir_rb"
+        itemType = "exchange"
         region = ""
         matlabBatch(itemType,region, mode = mode)

@@ -30,11 +30,33 @@ def extractRaw(itemList,itemType):
         result = pd.concat([raw,new])
         result = result[~result.index.duplicated(keep='last')]
         if "vixir" in itemType:
-           result = result.drop(columns = ["Volume"])
-           result = result.apply(lambda x: 1/x)
+            result = result.drop(columns = ["Volume"])
+            result = result.apply(lambda x: 1/x)
+        if "exchange" in itemType:
+            result = result.drop(columns = ["Change %"])
+            if item == "USDHKD":
+                result[result >= 7.85] = 7.85-1e-6
+                result[result <= 7.75] = 7.75+1e-6
         result.to_csv(filepath["removed"] + item + ".csv", sep=",", index=True)
         result["Close"].to_csv(filepath["extracted"] + item + ".csv", sep=",", index=True, header=True)
 
+def setUSDHKD(itemType):
+    filepath = {
+        "removed": "{}/updating/raw/".format(itemType),
+        "extracted": "{}/updating/extracted/".format(itemType),
+        "raw": "{}/original/raw/".format(itemType),
+        "new": "{}/updating/new/".format(itemType)
+        }
+    for f in filepath.values():
+        tempPath = Path(f)
+        tempPath.mkdir(parents=True, exist_ok=True)
+    input_item = "USDHKD"
+    output_item = "HKDUSD"
+    result = pd.read_csv(filepath["removed"] + input_item + ".csv", parse_dates=['Date'] , dayfirst=True, index_col=0 , na_values=["null"])
+    result = result.apply(lambda x: 1/x)
+    result.to_csv(filepath["removed"] + output_item + ".csv", sep=",", index=True)
+    result["Close"].to_csv(filepath["extracted"] + output_item + ".csv", sep=",", index=True, header=True)
+    print("USDHKD set")
 
 def processRaw(params,itemType, mode = "curr"):
     item = params[0]
@@ -96,7 +118,7 @@ def processRaw(params,itemType, mode = "curr"):
                         format="%(asctime)-15s %(levelname)-8s %(message)s")
     #epsilon = 0.4
 
-    if mode == "curr":
+    if mode == "exchange":
         if item == "HKDUSD":
             mode = "lowerCurr"
         elif item == "USDHKD":
@@ -129,18 +151,10 @@ def processRaw(params,itemType, mode = "curr"):
         SU = pd.Series(Sm[MAname]*0 + 1/7.75, name = "S_U")
         SL = pd.Series(Sm[MAname]*0 + 1/7.85, name = "S_L")
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
-        print((SU - Si.iloc[:,0]))
-        print((SU - SL))
-        print(testSeries)
-        print(np.log(testSeries))
     elif mode == "upperCurr":
         SU = pd.Series(Sm[MAname]*0 + 7.85, name = "S_U")
         SL = pd.Series(Sm[MAname]*0 + 7.75, name = "S_L")
         testSeries = ( (Si.iloc[:,0] - SL) / (SU - SL) ) 
-        print((Si.iloc[:,0] - SL))
-        print((SU - SL))
-        print(testSeries)
-        print(np.log(testSeries))
     elif mode == "vix":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
@@ -184,9 +198,12 @@ def updateRaw(itemType,region,mode):
     #sdList = [1.5,1.75,2,2.5]
     #dayList = [30,50,60,90,120]
     indexList = getItemNameFromJson(itemType,region)
+    
     if "bond" not in itemType:
         extractRaw(indexList,itemType + region)
         print("extractRaw done")
+    if "USDHKD" in indexList:
+        setUSDHKD(itemType + region)
     paramList = getParameterListFromJson(itemType,region)
     #paramList = (("0175.HK",2,30,"stockHK"),("0175.HK",2,60,"stockHK"),("0175.HK",2,90,"stockHK"),("0175.HK",2,120,"stockHK"))
     #print(paramList)
@@ -201,7 +218,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
 #for mode in ["lower"]:
-    itemType = "vixir_rb"
+    itemType = "exchange"
     region = ""
-    updateRaw(itemType,region, mode = "vix")
+    updateRaw(itemType,region, mode = "exchange")
 
