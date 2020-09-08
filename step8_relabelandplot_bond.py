@@ -370,7 +370,7 @@ if __name__ == '__main__':
     for mode in ["default"]:
         #itemType = "bond{mode}".format(mode=mode)
         #region = "GER"
-        itemType = "exchange"
+        itemType = "vixir"
         region = ""
         merger(itemType,region, mode = mode)
     #itemType = "bondfloat3"

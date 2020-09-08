@@ -86,6 +86,6 @@ def matlabUpdateMain(itemType , region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
-        itemType = "exchange"
+        itemType = "vixir"
         region = ""
         matlabUpdateMain(itemType,region, mode = mode)
