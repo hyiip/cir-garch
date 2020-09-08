@@ -1,0 +1,959 @@
+[
+    {
+        "stock": {
+            "region": "US",
+            "name": "MMM",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "AXP",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "AAPL",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "BA",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "CAT",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "CVX",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "CSCO",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "KO",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "DIS",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "XOM",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "GS",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "HD",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "IBM",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "INTC",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "JNJ",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "JPM",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "MCD",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "MRK",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "MSFT",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "NKE",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "PFE",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "PG",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "TRV",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "UTX",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "UNH",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "VZ",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "V",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "WMT",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    },
+    {
+        "stock": {
+            "region": "US",
+            "name": "WBA",
+            "component": "DJI",
+            "parameter": [
+                [
+                    {
+                        "SD": 2,
+                        "day": 30
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 60
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 90
+                    }
+                ],
+                [
+                    {
+                        "SD": 2,
+                        "day": 120
+                    }
+                ]
+            ]
+        }
+    }
+]

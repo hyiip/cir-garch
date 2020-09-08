@@ -1,0 +1,62 @@
+[
+    {
+        "bond1e4": {
+            "name": "F91002Y",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                },
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bond1e4": {
+            "name": "F91003M",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                },
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bond1e4": {
+            "name": "F91010Y",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                },
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

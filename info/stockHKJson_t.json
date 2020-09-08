@@ -1,0 +1,175 @@
+[
+    {
+        "stock": {
+            "name": "0005.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "0669.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+	{
+        "stock": {
+            "name": "0857.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "0883.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "0939.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "1088.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                },
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "2318.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "2319.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    },
+    {
+        "stock": {
+            "name": "3328.HK",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "HK",
+            "component": "HSI"
+        }
+    }
+]

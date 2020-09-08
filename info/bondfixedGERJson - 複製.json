@@ -1,0 +1,62 @@
+[
+    {
+        "bondfixed": {
+            "name": "F91002Y",
+            "parameter": [
+                {
+                    "SD": 2.5,
+                    "day": 30
+                },
+                {
+                    "SD": 2.5,
+                    "day": 60
+                },
+                {
+                    "SD": 2.5,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondfixed": {
+            "name": "F91003M",
+            "parameter": [
+                {
+                    "SD": 2.5,
+                    "day": 30
+                },
+                {
+                    "SD": 2.5,
+                    "day": 60
+                },
+                {
+                    "SD": 2.5,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondfixed": {
+            "name": "F91010Y",
+            "parameter": [
+                {
+                    "SD": 2.5,
+                    "day": 30
+                },
+                {
+                    "SD": 2.5,
+                    "day": 60
+                },
+                {
+                    "SD": 2.5,
+                    "day": 90
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

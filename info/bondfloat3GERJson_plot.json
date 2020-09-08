@@ -1,0 +1,71 @@
+[
+    {
+        "bondfloat3": {
+            "name": "F91002Y",
+            "parameter": [
+                {
+                    "SD": 2.5,
+                    "day": 30,
+					"tor": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tor": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 60,
+					"tor": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 90,
+					"tor": 0.6
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondfloat3": {
+            "name": "F91003M",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tor": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tor": 0.75
+                },
+                {
+                    "SD": 3,
+                    "day": 60,
+					"tor": 0.75
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondfloat3": {
+            "name": "F91010Y",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tor": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tor": 0.75
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

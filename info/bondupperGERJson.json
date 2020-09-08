@@ -1,0 +1,30 @@
+[
+    {
+        "bondupper": {
+            "name": "F91002Y",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondupper": {
+            "name": "F91003M",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 20
+                },
+                {
+                    "SD": 3,
+                    "day": 15
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

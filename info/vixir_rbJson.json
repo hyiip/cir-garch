@@ -1,0 +1,13 @@
+[
+    {
+        "vixir_rb": {
+            "name": "VIX",
+            "parameter": [
+                {
+                    "SD": 2.63,
+                    "day": 15
+                }
+            ]
+        }
+    }
+]

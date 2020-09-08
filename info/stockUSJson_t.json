@@ -1,0 +1,27 @@
+[
+    {
+        "stock": {
+            "name": "UNH",
+            "parameter": [
+                {
+                    "SD": 2,
+                    "day": 30
+                },
+                {
+                    "SD": 2,
+                    "day": 60
+                },
+                {
+                    "SD": 2,
+                    "day": 90
+                },
+                {
+                    "SD": 2,
+                    "day": 120
+                }
+            ],
+            "region": "US",
+            "component": "DJI"
+        }
+    }
+]
