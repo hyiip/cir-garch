@@ -21,12 +21,16 @@ function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
     if isreal(guess) ~= 1
         return
     end
-    xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
-
-    while (abs(guess-xo)>bd)
-        count = count + 1 ;
-        guess = xo;
+    try
         xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
+        while (abs(guess-xo)>bd)
+            count = count + 1 ;
+            guess = xo;
+            xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
+        end
+    catch
+        fprintf("Error occur: The NLOGLF function returned a NaN or infinite log-likelihood value.\n\n");
+        return
     end
     leakage = xo(3)*xo(3)/(4*xo(1)*xo(2));
     acov = mlecov(xo, Datatemp, 'nloglf', @myfun_O);

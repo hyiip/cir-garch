@@ -131,4 +131,5 @@ dmypy.json
 */*
 !info/*
 !garch_utils/*
+!output/*
 .vscode/
