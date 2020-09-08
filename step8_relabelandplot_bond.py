@@ -30,6 +30,7 @@ def plotGraphSetting(params,result,setting,itemmode):
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
     if itemType == "exchange":
         suffix = ""
+        item = item[:3] + "/" + item[3:]
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
@@ -43,6 +44,12 @@ def plotGraphSetting(params,result,setting,itemmode):
     elif itemmode == "lower":
         title = {
             "stdtit": "{}, moving average, quasi-bounded fixed at zero {}".format(item, suffix),
+            "leakage": "{} and leakage ratio {}".format(item, suffix),
+            "normalize": "{} and S/S_A {}".format(item, suffix),
+            "s": "{} and s {}".format(item, suffix),}
+    elif itemType == "exchange":
+        title = {
+            "stdtit": "{}, strong side and weak side {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
@@ -60,10 +67,17 @@ def plotGraphSetting(params,result,setting,itemmode):
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
             data = result[[result.columns[0]]]
+            
+            upper = data.copy()*0 + 1/7.75
+            upper = upper.rename(columns={"Close": "Weak side"})
+            lower = data.copy()*0 + 1/7.85
+            lower = lower.rename(columns={"Close": "Strong side"})
+            data = pd.concat([data, upper, lower],axis = 1)
+            print(data)
         else:
             data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         ax1 = data.plot(title = title["stdtit"], grid=True, fontsize=fontsize, figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
-    
+
     if setting == "s":
         data = result[[result.columns[0], "s"]]
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="s", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
@@ -88,6 +102,8 @@ def plotGraphSetting(params,result,setting,itemmode):
         ylabalT = "Bond Yield"
     elif "vix" in itemType:
         ylabalT = "VIX"
+    elif itemType == "exchange":
+        ylabalT = item
     else:
         ylabalT = ""
     ax1.set_ylabel(ylabalT, fontsize = fontsize)
@@ -119,6 +135,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data = data.iloc[749:]
     if itemType == "exchange":
         suffix = ""
+        item = item[:3] + "/" + item[3:]
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
@@ -327,7 +344,7 @@ def tablePlot(params):
             }
         tableFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
         graphName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
-        infographName = "{}_{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
+        infographName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
         filepath = {
             "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}/".format(itemType = itemType,item = item,SDint = SDint,day = day),
@@ -360,10 +377,10 @@ def merger(itemType , region,mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    pool = multiprocessing.Pool(processes=cpuCount)
-    pool.map(relabelAndPlot,paramList)
-    #for param in paramList:
-    #    relabelAndPlot(param)
+    #pool = multiprocessing.Pool(processes=cpuCount)
+    #pool.map(relabelAndPlot,paramList)
+    for param in paramList:
+        relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':
