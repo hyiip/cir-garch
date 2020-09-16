@@ -27,7 +27,7 @@ def extractRaw(itemList,itemType):
         new = pd.read_csv("{}{}_temp.csv".format(filepath["new"],item), parse_dates=['Date'] , dayfirst=True, index_col=0 , na_values=["null"])
         new = new.dropna() #remove null values
         raw = pd.read_csv("{}{}.csv".format(filepath["raw"],item), parse_dates=['Date'] , dayfirst=True, index_col=0 , na_values=["null"])
-        result = pd.concat([raw,new])
+        result = pd.concat([new,raw])
         result = result[~result.index.duplicated(keep='last')]
         if "vixir" in itemType:
             result = result.drop(columns = ["Volume"])
@@ -35,8 +35,8 @@ def extractRaw(itemList,itemType):
         if "exchange" in itemType:
             result = result.drop(columns = ["Change %"])
             if item == "USDHKD":
-                result[result >= 7.85] = 7.85-1e-6
-                result[result <= 7.75] = 7.75+1e-6
+                result[result >= 7.85] = 7.85-1e-5
+                result[result <= 7.75] = 7.75+1e-5
         result.to_csv(filepath["removed"] + item + ".csv", sep=",", index=True)
         result["Close"].to_csv(filepath["extracted"] + item + ".csv", sep=",", index=True, header=True)
 

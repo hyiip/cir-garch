@@ -67,11 +67,16 @@ def plotGraphSetting(params,result,setting,itemmode):
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
             data = result[[result.columns[0]]]
-            
-            upper = data.copy()*0 + 1/7.75
-            upper = upper.rename(columns={"Close": "Weak side"})
-            lower = data.copy()*0 + 1/7.85
-            lower = lower.rename(columns={"Close": "Strong side"})
+            if item == "HKD/USD":
+                upper = data.copy()*0 + 1/7.75
+                upper = upper.rename(columns={"Close": "Weak side"})
+                lower = data.copy()*0 + 1/7.85
+                lower = lower.rename(columns={"Close": "Strong side"})
+            elif item == "USD/HKD":
+                upper = data.copy()*0 + 7.85
+                upper = upper.rename(columns={"Close": "Weak side"})
+                lower = data.copy()*0 + 7.75
+                lower = lower.rename(columns={"Close": "Strong side"})
             data = pd.concat([data, upper, lower],axis = 1)
             print(data)
         else:

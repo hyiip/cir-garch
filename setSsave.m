@@ -11,7 +11,7 @@ function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
     thetai = -drift(1)/drift(2);
     sigmai = sqrt(var(res, 1)/TimeStep);
 
-    guess = [kappai thetai sigmai];
+    guess = [kappai mean(Datatemp) sigmai];
 
     guess(guess<lb) = lb(guess<lb) + bd;
     guess(guess>ub) = ub(guess>ub) - bd;
