@@ -28,10 +28,14 @@ def plotGraphSetting(params,result,setting,itemmode):
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
+    if "vixir" in itemType:
+        item = "1/VIX"
     if itemType == "exchange":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
+    elif "sb" in itemType:
+        suffix = "(Singly Bounded) (SD = {}, MA = {})".format(SD, MA)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
     if itemmode == "upper":
@@ -60,6 +64,12 @@ def plotGraphSetting(params,result,setting,itemmode):
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
             data = result[[result.columns[0]]]
+        elif itemType == "vixir_sb":
+            title["stdtit"] = "{}, moving average and S_L {}".format(item, suffix)
+            data = result[[result.columns[0], "{}MA".format(MA), "S_L"]]
+        elif itemType == "vixnm_sb":
+            title["stdtit"] = "{}, moving average and S_U {}".format(item, suffix)
+            data = result[[result.columns[0], "{}MA".format(MA), "S_U"]]
         else:
             data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         ax1 = data.plot(title = title["stdtit"], grid=True, fontsize=fontsize, figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
@@ -83,11 +93,14 @@ def plotGraphSetting(params,result,setting,itemmode):
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("S/S_A", fontsize = fontsize)
-        ax1.right_ax.set_ylim(0,4)
+        if "vixir" in itemType:
+            ax1.right_ax.set_ylim(0,2)
+        else:
+            ax1.right_ax.set_ylim(0,4)
     if "bond" in itemType:
         ylabalT = "Bond Yield"
     elif "vix" in itemType:
-        ylabalT = "VIX"
+        ylabalT = item
     else:
         ylabalT = ""
     ax1.set_ylabel(ylabalT, fontsize = fontsize)
@@ -121,9 +134,12 @@ def plotGraphParameter(params,result,parameter,itemmode):
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
+    elif "sb" in itemType:
+        suffix = "(Singly Bounded) (SD = {}, MA = {})".format(SD, MA)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
-
+    if "vixir" in itemType:
+        item = "1/VIX"
     if itemmode == "upper":
         title = "{}ing windows, quasi-bounded fixed at S_U, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
     elif itemmode == "lower":
@@ -205,7 +221,8 @@ def relabelAndPlot(params):
             "output_graph": "output/{itemType}/graph/{item}/day{day}tol{epsilon}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
             "output_result": "output/{itemType}/result/{item}/day{day}tol{epsilon}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
             }
-        resultFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
+        inputResultFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
+        outputResultFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
         graphName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
         infographName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
@@ -224,26 +241,34 @@ def relabelAndPlot(params):
                 "output_result": "output/{itemType}/result/{item}/{mode}/".format(itemType = itemType,item = item,mode = mode),
                 }
 
-        if "bond" not in itemType:
-            resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
-            graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
-            infographName = "{}_SD{}day{}".format(item,SDint,day)
+        if "sb" in itemType:
+            inputResultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            outputResultFile = "sb_{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            graphName = "sb_{}_{}_SD{}day{}".format(mode,item,SDint,day)
+            infographName = "sb_{}_SD{}day{}".format(item,SDint,day)
         elif "exchange" in itemType:
-            resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            inputResultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            outputResultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}".format(mode,item)
             infographName = "{}".format(item)
+        elif "bond" not in itemType:
+            inputResultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            outputResultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
+            infographName = "{}_SD{}day{}".format(item,SDint,day)
         else:
-            resultFile = "{}_{}_day{}_SD{}_{}.csv".format(mode,itemmode,MA,SD,item)
+            inputResultFile = "{}_{}_day{}_SD{}_{}.csv".format(mode,itemmode,MA,SD,item)
+            outputResultFile = "{}_{}_day{}_SD{}_{}.csv".format(mode,itemmode,MA,SD,item)
             graphName = "{}_{}_{}_SD{}day{}".format(mode,itemmode,item,SDint,day)
             infographName = "{}_{}_SD{}day{}".format(itemmode,item,SDint,day)
     for f in filepath.values():
         tempPath = Path(f)
         tempPath.mkdir(parents=True, exist_ok=True)
-    resultPath = filepath["result"] + resultFile
+    resultPath = filepath["result"] + inputResultFile
     #bank = pd.read_csv("{}/updating/bank.csv".format(itemType) , index_col=0, na_values=["null"])
     #bank = bank.drop(bank.index[0:day-1])
     result = pd.read_csv(resultPath, index_col=0)
-    result.to_csv(filepath["output_result"] + resultFile, sep=",", index=True)
+    result.to_csv(filepath["output_result"] + outputResultFile, sep=",", index=True)
     #result.insert(2,"Bank",bank["Bank"].tolist())
     '''
     result.columns = [result.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', 'Band Width', "s","Leakage Ratio",

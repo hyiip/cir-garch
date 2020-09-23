@@ -65,6 +65,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
     for mode in ["default"]:
-        itemType = "exchange"
+        itemType = "vixnm_sb"
         region = ""
         matlabBatch(itemType,region, mode = mode)

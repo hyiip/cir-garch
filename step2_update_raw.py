@@ -138,7 +138,6 @@ def processRaw(params,itemType, mode = "curr"):
             SL[i] = Sm[MAname][i] - abs(wide)
             thickness[i] = abs(wide) 
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
-
     elif mode == "lower":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")
@@ -163,6 +162,15 @@ def processRaw(params,itemType, mode = "curr"):
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+    elif mode == "single":
+        if "vixnm" in itemType:
+            SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
+            SL = pd.Series(Sm[MAname]*0, name = "S_L")
+            testSeries = ( (Si.iloc[:,0] ) / (SU) )  
+        if "vixir" in itemType:
+            SU = pd.Series(Sm[MAname]*0 + np.inf, name = "S_U")
+            SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
+            testSeries = ( (SL) /  (Si.iloc[:,0] ) ) 
     else:
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
@@ -218,7 +226,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
 #for mode in ["lower"]:
-    itemType = "exchange"
+    itemType = "vixnm_sb"
     region = ""
-    updateRaw(itemType,region, mode = "exchange")
+    updateRaw(itemType,region, mode = "single")
 
