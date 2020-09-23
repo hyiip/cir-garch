@@ -1,46 +1,26 @@
 [
     {
         "bondlower": {
-            "name": "F91003M",
+            "name": "F91002Y",
             "parameter": [
-                {
-                    "SD": 2,
-                    "day": 15
-                },
-                {
-                    "SD": 4,
-                    "day": 15
-                },
-                {
-                    "SD": 6,
-                    "day": 15
-                },
-                {
+				{
                     "SD": 8,
-                    "day": 15
-                },
-                {
-                    "SD": 10,
-                    "day": 15
+                    "day": 30
                 },
 				{
-                    "SD": 2,
-                    "day": 30
-                },
-                {
                     "SD": 4,
-                    "day": 30
-                },
-                {
-                    "SD": 6,
-                    "day": 30
-                },
-                {
+                    "day": 60
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondlower": {
+            "name": "F91010Y",
+            "parameter": [
+				{
                     "SD": 8,
-                    "day": 30
-                },
-                {
-                    "SD": 10,
                     "day": 30
                 }
             ],
