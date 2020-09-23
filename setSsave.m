@@ -11,7 +11,7 @@ function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
     thetai = -drift(1)/drift(2);
     sigmai = sqrt(var(res, 1)/TimeStep);
 
-    guess = [kappai mean(Datatemp) sigmai];
+    guess = [kappai thetai sigmai];
 
     guess(guess<lb) = lb(guess<lb) + bd;
     guess(guess>ub) = ub(guess>ub) - bd;
@@ -22,11 +22,11 @@ function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
         return
     end
     try
-        xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
+        xo= mle(Datatemp,'nloglf', @myfun_O2,'start', guess,'lowerbound',lb);
         while (abs(guess-xo)>bd)
             count = count + 1 ;
             guess = xo;
-            xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
+            xo= mle(Datatemp,'nloglf', @myfun_O2,'start', guess,'lowerbound',lb);
         end
     catch
         fprintf("Error occur: The NLOGLF function returned a NaN or infinite log-likelihood value.\n\n");
