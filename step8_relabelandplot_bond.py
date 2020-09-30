@@ -46,6 +46,11 @@ def plotGraphSetting(params,result,setting,itemmode):
             "leakage": "{} and leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
+    elif itemmode == "fixed":
+        title = {
+            "stdtit": "{}, moving average, quasi-bounded fixed at zero, upper bound fixed at 4%".format(item),
+            "leakage": "{} and leakage ratio (without trimming)".format(item),
+            "s": "{} and s".format(item),}
     else:
         title = {
             "stdtit": "{}, moving average, S_U and S_L {}".format(item, suffix),
@@ -56,6 +61,8 @@ def plotGraphSetting(params,result,setting,itemmode):
         if "bond" in itemType:
             if itemmode in ["upper","lower"]:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U"]]
+            elif itemmode in ["fixed"]:
+                data = result[[result.columns[0], "S_U", "S_L"]]
             else:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
@@ -75,8 +82,8 @@ def plotGraphSetting(params,result,setting,itemmode):
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="Leakage Ratio", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("Leakage Ratio", fontsize = fontsize)
-        if max(result["Leakage Ratio"]>1):
-            ax1.right_ax.set_ylim(0,1.5)
+        # if max(result["Leakage Ratio"]>1):
+        #     ax1.right_ax.set_ylim(0,1.5)
 
     if setting == "normalize":
         data = result[[result.columns[0], "S/S_A"]]
@@ -117,7 +124,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data = result[[parameter, parameter + "_z"]]
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
-    if itemType == "exchange":
+    if itemType == "exchange" or itemmode == "fixed":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
@@ -128,6 +135,8 @@ def plotGraphParameter(params,result,parameter,itemmode):
         title = "{}ing windows, quasi-bounded fixed at S_U, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
     elif itemmode == "lower":
         title = "{}ing windows, quasi-bounded fixed at zero, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
+    elif itemmode == "fixed":
+        title = "{}ing windows, quasi-bounded fixed at zero, upper bound fixed at 4%, {} - {} and z-score".format(mode.capitalize(),item, parameter)
     else:
         title = "{}ing windows, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
 
@@ -193,7 +202,7 @@ def relabelAndPlot(params):
     SD = str(int(SDint*100))
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
     itemmode = itemType.replace("bond","").replace("GER","")
-    if itemmode not in ["upper","lower"]:
+    if itemmode not in ["upper","lower","fixed"]:
         itemmode = ""
     else:
         itemmode =  itemmode
@@ -260,7 +269,7 @@ def relabelAndPlot(params):
         fig.savefig(filepath["output_graph"] + "{}_{}.png".format(graphName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.eps".format(graphName,var), format='eps' )
     
-    if itemType == "exchange":
+    if itemType == "exchange" or itemmode == "fixed":
         setting = ["main","s","leakage"]
     else:
         setting = ["main","s","leakage","normalize"]
@@ -313,7 +322,7 @@ def tablePlot(params):
     SD = str(int(SDint*100))
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
     itemmode = itemType.replace("bond","").replace("GER","")
-    if itemmode not in ["upper","lower"]:
+    if itemmode not in ["upper","lower","fixed"]:
         itemmode = ""
     else:
         itemmode =  itemmode
@@ -368,7 +377,7 @@ def merger(itemType , region,mode="hybrid"):
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["lower"]:
+    for mode in ["fixed"]:
         itemType = "bond{mode}".format(mode=mode)
         region = "GER"
         #itemType = "vixir"

@@ -26,7 +26,7 @@ def matlabUpdate(params):
     MA = str(day)
     SD = str(int(SDint*100))
     itemmode = itemType.replace("bond","").replace("GER","")
-    if itemmode not in ["upper","lower"]:
+    if itemmode not in ["upper","lower","fixed"]:
         itemmode = ""
     else:
         itemmode =  itemmode
@@ -85,7 +85,7 @@ def matlabUpdateMain(itemType , region,mode="hybrid"):
     
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["lower"]:
+    for mode in ["fixed"]:
         itemType = "bond{}".format(mode)
         region = "GER"
         matlabUpdateMain(itemType,region, mode = mode)

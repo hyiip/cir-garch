@@ -29,7 +29,7 @@ def matlabRun(params):
     #1/0
     #print(item, SD, day, offset)
     mode = itemType.replace("bond","").replace("GER","")
-    if mode not in ["upper","lower"]:
+    if mode not in ["upper","lower","fixed"]:
         mode = ""
     else:
         mode = mode + "_"
@@ -67,7 +67,7 @@ def matlabBatch(itemType,region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    for mode in ["lower"]:
+    for mode in ["fixed"]:
         itemType = "bond{}".format(mode)
         region = "GER"
         matlabBatch(itemType,region, mode = mode)

@@ -37,7 +37,7 @@ def resultmerge(params):
     
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
     itemmode = itemType.replace("bond","").replace("GER","")
-    if itemmode not in ["upper","lower"]:
+    if itemmode not in ["upper","lower","fixed"]:
         itemmode = ""
     else:
         itemmode =  itemmode
@@ -98,7 +98,7 @@ def resultmerge(params):
         "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
         "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
     '''
-    if itemmode not in ["upper","lower"]:
+    if itemmode not in ["upper","lower","fixed"]:
         if "bond" not in itemType:
             all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
@@ -150,7 +150,7 @@ def resultMerger(itemType , region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["lower"]:
+    for mode in ["fixed"]:
         itemType = "bond{mode}".format(mode = mode)
         region = "GER"
         resultMerger(itemType,region, mode = mode)

@@ -82,7 +82,7 @@ def processRaw(params,itemType, mode = "curr"):
             "root": "{}/updating/tol{}/".format(itemType,epsilon),
             
             }
-        if  mode in ["lower", "upper"]:
+        if  mode in ["lower", "upper", "fixed"]:
             filestring = "{}_tol{}_day{}_SD{}_".format(mode,epsilon,day,SDstring)
         else:
             filestring = "tol{}_day{}_SD{}_".format(epsilon,day,SDstring)
@@ -93,7 +93,7 @@ def processRaw(params,itemType, mode = "curr"):
             "table": "{}/updating/table/SD{}/day{}/".format(itemType,SDstring,day),
             "root": "{}/updating/".format(itemType),
             }
-        if mode in ["lower", "upper"]:
+        if mode in ["lower", "upper", "fixed"]:
             filestring = "{}_day{}_SD{}_".format(mode,day,SDstring)
         else:
             filestring = "day{}_SD{}_".format(day,SDstring)
@@ -148,6 +148,10 @@ def processRaw(params,itemType, mode = "curr"):
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")
         testSeries = ( (Si.iloc[:,0] - SL) / (SU - SL) ) 
+    elif mode == "fixed":
+        SU = pd.Series(Sm[MAname]*0 + 4, name = "S_U")
+        SL = pd.Series(Sm[MAname]*0, name = "S_L")
+        testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
     elif mode == "lowerCurr":
         SU = pd.Series(Sm[MAname]*0 + 1/7.75, name = "S_U")
         SL = pd.Series(Sm[MAname]*0 + 1/7.85, name = "S_L")
@@ -218,7 +222,7 @@ def updateRaw(itemType,region,mode):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
-    for mode in ["lower"]:
+    for mode in ["fixed"]:
         itemType = "bond{mode}".format(mode = mode)
         region = "GER"
         updateRaw(itemType,region, mode = mode)
