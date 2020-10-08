@@ -151,6 +151,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
     for mode in ["default"]:
-        itemType = "vixnm_sb"
+        itemType = "vixir_sb"
         region = ""
         resultMerger(itemType,region, mode = mode)

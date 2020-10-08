@@ -226,7 +226,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
 #for mode in ["lower"]:
-    itemType = "vixnm_sb"
+    itemType = "vixir_sb"
     region = ""
     updateRaw(itemType,region, mode = "single")
 
