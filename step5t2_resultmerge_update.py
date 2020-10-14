@@ -11,7 +11,9 @@ from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 from garch_utils.inputForm import inputForm
  
 
-def resultmerge(params):
+def resultmerge(fullParams):
+    params = fullParams[0]
+    itemmode = fullParams[1]
     mode = params[0]
     item = params[1]
     SDint = params[2]
@@ -36,7 +38,7 @@ def resultmerge(params):
     #print(names[loc+1:-4])
     
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
-    itemmode = itemType.replace("bond","").replace("GER","")
+    #itemmode = itemType.replace("bond","").replace("GER","")
     if itemmode not in ["upper","lower"]:
         itemmode = ""
     else:
@@ -77,8 +79,7 @@ def resultmerge(params):
     
     
     table = pd.read_csv(tablePath + tableName, parse_dates=['Date'] , dayfirst=True, index_col=0 , na_values=["null"])
-
-    if not "bond" in itemType:
+    if (not "bond" in itemType) or (not "GER" in itemType) :
         all = pd.concat([table,bounded], axis=1)
     #print(table.head(1))
     else:
@@ -99,7 +100,7 @@ def resultmerge(params):
         "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
     '''
     if itemmode not in ["upper","lower"]:
-        if "bond" not in itemType:
+        if ("bond" not in itemType):
             all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
@@ -124,25 +125,37 @@ def resultmerge(params):
 
 
     else:
-        all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
-            "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
-            "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
-            "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
+        if ("GER" not in itemType):
+            all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
+                "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
+                "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
+                "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
 
-        #all.rename(columns={'bounded_x': 'x'}, inplace=True)
-        all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
-        "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
-        "theta","theta_SE","theta_lb","theta_ub","theta_z",
-        "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
+            #all.rename(columns={'bounded_x': 'x'}, inplace=True)
+            all.columns = [all.columns[0],MA+"MA","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
+            "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
+            "theta","theta_SE","theta_lb","theta_ub","theta_z",
+            "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
+        else:
+            all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
+                "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
+                "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
+                "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
+
+            #all.rename(columns={'bounded_x': 'x'}, inplace=True)
+            all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
+            "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
+            "theta","theta_SE","theta_lb","theta_ub","theta_z",
+            "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
     all.to_csv(pathname + resultNames, sep=",", index=True)
     #all.to_excel(writer,index)
     #writer.save()
     print(pathname + resultNames)
     
-def resultMerger(itemType , region,mode="hybrid"):
+def resultMerger(itemType , region, mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region)
     modeList = ["roll"]
-    paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
+    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
     for param in paramList:
         resultmerge(param)
     return 0

@@ -11,7 +11,9 @@ from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 from garch_utils.inputForm import inputForm
 import time
 
-def matlabRun(params):
+def matlabRun(fullParams):
+    params = fullParams[0]
+    mode = fullParams[1]
     rollexpand = params[0]
     item = params[1]
     SD = params[2]
@@ -28,7 +30,7 @@ def matlabRun(params):
     #offset = -1
     #1/0
     #print(item, SD, day, offset)
-    mode = itemType.replace("bond","").replace("GER","")
+    #mode = itemType.replace("bond","").replace("GER","")
     if mode not in ["upper","lower"]:
         mode = ""
     else:
@@ -50,7 +52,7 @@ def matlabBatch(itemType,region,mode="hybrid"):
     #indexList = getItemNameFromJson(itemType,region)
     tempList = getParameterListFromJson(itemType,region)
     modeList = ["roll"]
-    paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
+    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
     #withTypeList = [(n,s,d,itemType + region) for n, s, d in paramList]
     #paramList = (("2319.HK",2,30,"stockHK"),("2319.HK",2,60,"stockHK"))
     cpuCount = multiprocessing.cpu_count()

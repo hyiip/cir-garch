@@ -83,7 +83,7 @@ def plotGraphSetting(params,result,setting,itemmode):
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("S/S_A", fontsize = fontsize)
-        ax1.right_ax.set_ylim(0,4)
+        #ax1.right_ax.set_ylim(0,4)
     if "bond" in itemType:
         ylabalT = "Bond Yield"
     elif "vix" in itemType:
@@ -179,7 +179,9 @@ def plotGraphParameter(params,result,parameter,itemmode):
     fig1.autofmt_xdate()
     return fig1
 
-def relabelAndPlot(params):
+def relabelAndPlot(fullParams):
+    params = fullParams[0]
+    itemmode = fullParams[1]
     mode = params[0]
     item = params[1]
     SDint = params[2]
@@ -192,7 +194,7 @@ def relabelAndPlot(params):
     MA = str(day)
     SD = str(int(SDint*100))
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
-    itemmode = itemType.replace("bond","").replace("GER","")
+    #itemmode = itemType.replace("bond","").replace("GER","")
     if itemmode not in ["upper","lower"]:
         itemmode = ""
     else:
@@ -353,10 +355,10 @@ def tablePlot(params):
     print(params)
     
 
-def merger(itemType , region,mode="hybrid"):
+def merger(itemType , region, mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region,mode = "plot")
     modeList = ["roll"]
-    paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
+    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)

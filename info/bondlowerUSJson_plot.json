@@ -1,0 +1,34 @@
+[
+    {
+        "bondlower": {
+            "name": "ust3myieldzc",
+            "parameter": [
+                {
+                    "SD": 16,
+                    "day": 60
+                },
+                {
+                    "SD": 16,
+                    "day": 90
+                },
+                {
+                    "SD": 16,
+                    "day": 15
+                },
+                {
+                    "SD": 15,
+                    "day": 60
+                },
+                {
+                    "SD": 15,
+                    "day": 90
+                },
+                {
+                    "SD": 15,
+                    "day": 15
+                }
+            ],
+            "region": "US"
+        }
+    }
+]
