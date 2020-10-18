@@ -46,11 +46,12 @@ def matlabBatch(itemType,region,mode="hybrid"):
     #dayList = [30,50,60,90,120]
     #indexList = getItemNameFromJson(itemType,region)
     tempList = getParameterListFromJson(itemType,region)
-    modeList = ["roll", "expand"]
+    modeList = ["roll"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
     #withTypeList = [(n,s,d,itemType + region) for n, s, d in paramList]
     #paramList = (("2319.HK",2,30,"stockHK"),("2319.HK",2,60,"stockHK"))
     cpuCount = multiprocessing.cpu_count()
+    cpuCount = 1
     #print(cpuCount)
     pool = multiprocessing.Pool(processes=cpuCount)
     pool.map(matlabRun,paramList)

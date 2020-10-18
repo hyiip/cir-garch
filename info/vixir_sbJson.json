@@ -4,8 +4,8 @@
             "name": "VIX",
             "parameter": [
                 {
-                    "SD": 2.88,
-                    "day": 30
+                    "SD": 3.2,
+                    "day": 50
                 }
             ]
         }
