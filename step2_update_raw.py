@@ -143,7 +143,10 @@ def processRaw(params,itemType, mode = "curr"):
     elif mode == "lower":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")
-        testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+        if item == "F91010Y_mod":
+            testSeries = np.exp(-Si.iloc[:,0])
+        else:
+            testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
     elif mode == "upper":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")

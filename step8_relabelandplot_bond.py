@@ -28,12 +28,13 @@ def plotGraphSetting(params,result,setting,itemmode):
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
-    if itemType == "exchange":
+    if itemType == "exchange" or item == "F91010Y_mod":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
+    item = item.replace("_mod","")
     if itemmode == "upper":
         title = {
             "stdtit": "{}, moving average and quasi-bounded fixed at S_U {}".format(item, suffix),
@@ -117,14 +118,16 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data = result[[parameter, parameter + "_z"]]
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
-    if itemType == "exchange":
+    if itemType == "exchange" or item == "F91010Y_mod":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
     else:
         suffix = "(SD = {}, MA = {})".format(SD, MA)
-
-    if itemmode == "upper":
+    if item == "F91010Y_mod":
+        item = item.replace("_mod","")
+        title = "{}ing windows, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
+    elif itemmode == "upper":
         title = "{}ing windows, quasi-bounded fixed at S_U, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
     elif itemmode == "lower":
         title = "{}ing windows, quasi-bounded fixed at zero, {} - {} and z-score {}".format(mode.capitalize(),item, parameter, suffix)
