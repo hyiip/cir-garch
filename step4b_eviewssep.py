@@ -50,14 +50,18 @@ def eviewssep(params):
     rollDf.to_csv(rollname + rollSavenames, sep=",", index=True)
     print(fileName)
 
-def eViewMerge():
-    sdList = [1.5,1.75,2,2.5]
-    dayList = [30,50,60,90,120]
-    indexList = getIndexList()
-    paramList = list(itertools.product(sdList,dayList,indexList))
+def eViewMerge(itemType,region,mode):
+    tempList = getParameterListFromJson(itemType,region)
+    modeList = ["roll"]
+    paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
+    #indexList = getItemNameFromJson(itemType,region)
+    #paramList = list(itertools.product(sdList,dayList,indexList))
     for param in paramList:
         eviewssep(param)
     return 0
         
 if __name__ == '__main__':
-    eViewMerge()
+    for mode in ["default"]:
+        itemType = "vixir_sb"
+        region = ""
+        eViewMerge(itemType,region, mode = mode)
