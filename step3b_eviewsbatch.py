@@ -5,11 +5,12 @@ import numpy as np
 import itertools
 import multiprocessing
 import time
+from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 #from getIndexList import getIndexList
 
 def eviewsRun(fullParams):
     
-    eviewsapp = evp.GetEViewsApp(instance='new', showwindow=True) #showwindow=True, otherwise never know what have happened
+    eviewsapp = evp.GetEViewsApp(version='EViews.Manager.9', instance='new', showwindow=True) #showwindow=True, otherwise never know what have happened
     info = pd.read_csv("updating/info.csv",index_col=0)
     rollexpand = fullParams[0]
     params = fullParams[1]
@@ -17,7 +18,7 @@ def eviewsRun(fullParams):
     SD = params[1]
     day = params[2]
     itemType = params[3]
-    offset = int(info.loc[index]["offset"]-1)
+    offset = int(info.loc[item]["offset"]-1) 
     #offset = -1
     mypath = str(Path().absolute())
     command = "run \"eviewsbatch_dropna.prg\" {SD} {day} \"{item}\" {offset} \"{itemType}\" \"{rollexpand}\"".format(
@@ -46,11 +47,11 @@ def eviewsbatch(itemType,region,mode="hybrid"):
     #paramlist = paramlist
 
     cpuCount = multiprocessing.cpu_count()
-    pool = multiprocessing.Pool(processes=1)
-    pool.map(eviewsRun,paramlist)
+    #pool = multiprocessing.Pool(processes=cpuCount)
+    #pool.map(eviewsRun,paramList)
     
-    #for param in paramlist:
-    #    eviewsRun(param)
+    for param in paramList:
+        eviewsRun(param)
     
     end = time.time()
     elapsed = end - start
@@ -60,6 +61,6 @@ def eviewsbatch(itemType,region,mode="hybrid"):
     
 if __name__ == '__main__':
     for mode in ["default"]:
-        itemType = "vixir_sb"
+        itemType = "vixir"
         region = ""
         eviewsbatch(itemType,region, mode = mode)
