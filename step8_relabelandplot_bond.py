@@ -12,7 +12,7 @@ from os.path import isfile, join
 from pathlib import Path
 from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 from garch_utils.inputForm import inputForm
-figsize=(16, 8)
+figsize=(20, 8)
 fontsize = 16
 def plotGraphSetting(params,result,setting,itemmode):
     mode = params[0]
@@ -42,18 +42,21 @@ def plotGraphSetting(params,result,setting,itemmode):
         title = {
             "stdtit": "{}, moving average and quasi-bounded fixed at S_U {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
+            "pct_change": "{} and % change of leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
     elif itemmode == "lower":
         title = {
             "stdtit": "{}, moving average, quasi-bounded fixed at zero {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
+            "pct_change": "{} and % change of leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
     else:
         title = {
             "stdtit": "{}, moving average, S_U and S_L {}".format(item, suffix),
             "leakage": "{} and leakage ratio {}".format(item, suffix),
+            "pct_change": "{} and % change of leakage ratio {}".format(item, suffix),
             "normalize": "{} and S/S_A {}".format(item, suffix),
             "s": "{} and s {}".format(item, suffix),}
     if setting == "main":
@@ -76,13 +79,13 @@ def plotGraphSetting(params,result,setting,itemmode):
     
     if setting == "s":
         data = result[[result.columns[0], "s"]]
-        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="s", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="s", figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("s", fontsize = fontsize)
 
     if setting == "leakage":
         data = result[[result.columns[0], "Leakage Ratio"]]
-        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="Leakage Ratio", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="Leakage Ratio", figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("Leakage Ratio", fontsize = fontsize)
         if max(result["Leakage Ratio"]>1):
@@ -90,13 +93,23 @@ def plotGraphSetting(params,result,setting,itemmode):
 
     if setting == "normalize":
         data = result[[result.columns[0], "S/S_A"]]
-        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("S/S_A", fontsize = fontsize)
         if "vixir" in itemType:
             ax1.right_ax.set_ylim(0,2)
         else:
             ax1.right_ax.set_ylim(0,4)
+
+    if setting == "pct_change":
+        data = result[[result.columns[0], "% change"]]
+        ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="% change", figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
+
+        ax1.right_ax.set_ylabel("% change of leakage", fontsize = fontsize)
+        #ax1.right_ax.lines[0].set_alpha(0.5)
+        if max(result["% change"]>100):
+            ax1.right_ax.set_ylim(-100,150)
+            
     if "bond" in itemType:
         ylabalT = "Bond Yield"
     elif "vix" in itemType:
@@ -183,7 +196,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
             template="plotly_white",
             )
     fig = go.Figure(data=plotData, layout=layout)'''
-    ax1 = data.plot(title =  title, grid=True, secondary_y=["{}_z".format(parameter),"z-score > 1.96"], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+    ax1 = data.plot(title =  title, grid=True, secondary_y=["{}_z".format(parameter),"z-score > 1.96"], fontsize=fontsize,figsize=figsize, xticks = (np.arange(0, len(data)+1, 250.0)))
     plt.autoscale(enable=True, axis='x', tight=True)                           
     ax1.set_xlabel("Date", fontsize = fontsize)
     ax1.set_ylabel(parameter, fontsize = fontsize)
@@ -286,9 +299,9 @@ def relabelAndPlot(params):
         fig.savefig(filepath["output_graph"] + "{}_{}.eps".format(graphName,var), format='eps' )
     
     if itemType == "exchange":
-        setting = ["main","s","leakage"]
+        setting = ["main","s","leakage", "pct_change"]
     else:
-        setting = ["main","s","leakage","normalize"]
+        setting = ["main","s","leakage","normalize", "pct_change"]
     
     for var in setting:
         fig = plotGraphSetting(params,result, var,itemmode)

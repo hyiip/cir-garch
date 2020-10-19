@@ -77,7 +77,7 @@ def matlabUpdate(params):
 def matlabUpdateMain(itemType , region,mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region)
     #modeList = ["expand","roll"]
-    modeList = ["roll","expand"]
+    modeList = ["roll"]
     paramList = [(a,*b) for a,b in itertools.product(modeList,tempList)]
     for param in paramList:
         matlabUpdate(param)
@@ -86,6 +86,6 @@ def matlabUpdateMain(itemType , region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
-        itemType = "vixir_sb"
+        itemType = "vixir"
         region = ""
         matlabUpdateMain(itemType,region, mode = mode)
