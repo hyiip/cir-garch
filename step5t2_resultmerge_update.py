@@ -94,31 +94,32 @@ def resultmerge(fullParams):
     all["cir_theta_ub"] = all["cir_theta"] + 1.96 * all["cir_theta_sd"]
     all["cir_sigma_lb"] = all["cir_sigma"] - 1.96 * all["cir_sigma_sd"]
     all["cir_sigma_ub"] = all["cir_sigma"] + 1.96 * all["cir_sigma_sd"]
-    ''' all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L',"thickness","bounded_x","cir_leakage",
+    all["pct_change"] = all["cir_leakage"].pct_change() * 100
+    ''' all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L',"thickness","bounded_x","cir_leakage", "pct_change", 
         "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
         "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
         "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
     '''
     if itemmode not in ["upper","lower"]:
         if ("bond" not in itemType):
-            all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
+            all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage", "pct_change", 
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
                 "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
 
             #all.rename(columns={'bounded_x': 'x'}, inplace=True)
-            all.columns = [all.columns[0],MA+"MA","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
+            all.columns = [all.columns[0],MA+"MA","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio", "% change",
             "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
             "theta","theta_SE","theta_lb","theta_ub","theta_z",
             "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
         else:
-            all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "thickness", "bounded_x","cir_leakage",
+            all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "thickness", "bounded_x","cir_leakage", "pct_change", 
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
                 "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
 
             #all.rename(columns={'bounded_x': 'x'}, inplace=True)
-            all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', 'Band Width', "s","Leakage Ratio",
+            all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', 'Band Width', "s","Leakage Ratio", "% change",
             "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
             "theta","theta_SE","theta_lb","theta_ub","theta_z",
             "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
@@ -126,24 +127,24 @@ def resultmerge(fullParams):
 
     else:
         if ("GER" not in itemType):
-            all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
+            all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage", "pct_change", 
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
                 "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
 
             #all.rename(columns={'bounded_x': 'x'}, inplace=True)
-            all.columns = [all.columns[0],MA+"MA","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
+            all.columns = [all.columns[0],MA+"MA","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio", "% change",
             "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
             "theta","theta_SE","theta_lb","theta_ub","theta_z",
             "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
         else:
-            all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
+            all = all[[all.columns[0],MA+"MA","Bank","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage", "pct_change", 
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
                 "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
 
             #all.rename(columns={'bounded_x': 'x'}, inplace=True)
-            all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio",
+            all.columns = [all.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', "s","Leakage Ratio", "% change",
             "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
             "theta","theta_SE","theta_lb","theta_ub","theta_z",
             "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
@@ -152,7 +153,7 @@ def resultmerge(fullParams):
     #writer.save()
     print(pathname + resultNames)
     
-def resultMerger(itemType , region, mode="hybrid"):
+def resultMerger(itemType , region, mode="default"):
     tempList = getParameterListFromJson(itemType,region)
     modeList = ["roll"]
     paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
@@ -163,7 +164,6 @@ def resultMerger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["lower"]:
-        itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
-        resultMerger(itemType,region, mode = mode)
+    itemType = "stock"
+    region = "HK"
+    resultMerger(itemType,region)

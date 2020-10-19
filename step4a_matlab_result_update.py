@@ -76,7 +76,7 @@ def matlabUpdate(fullParams):
     
 
     
-def matlabUpdateMain(itemType , region,mode="hybrid"):
+def matlabUpdateMain(itemType , region,mode="default"):
     tempList = getParameterListFromJson(itemType,region)
     #modeList = ["expand","roll"]
     modeList = ["roll"]
@@ -87,7 +87,6 @@ def matlabUpdateMain(itemType , region,mode="hybrid"):
     
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["lower"]:
-        itemType = "bond{}".format(mode)
-        region = "GER"
-        matlabUpdateMain(itemType,region, mode = mode)
+    itemType = "index"
+    region = ""
+    matlabUpdateMain(itemType,region)

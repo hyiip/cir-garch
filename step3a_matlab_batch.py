@@ -45,7 +45,7 @@ def matlabRun(fullParams):
         eng.CIR_MLE2(rollexpand,SD,day,offset,item,itemType,mode)
     eng.quit()
 
-def matlabBatch(itemType,region,mode="hybrid"):
+def matlabBatch(itemType,region,mode="default"):
     start = time.time()
     #sdList = [1.5,1.75,2,2.5]
     #dayList = [30,50,60,90,120]
@@ -69,7 +69,6 @@ def matlabBatch(itemType,region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    for mode in ["lower"]:
-        itemType = "bond{}".format(mode)
-        region = "GER"
-        matlabBatch(itemType,region, mode = mode)
+    itemType = "index"
+    region = ""
+    matlabBatch(itemType,region)

@@ -11,6 +11,9 @@ import warnings
 from garch_utils.inputForm import inputForm
 import logging
 
+def LessThanZero():
+    warnings.warn("spot cross quasi-bounded!")
+
 def extractRaw(itemList,itemType):
     filepath = {
         "removed": "{}/updating/raw/".format(itemType),
@@ -175,6 +178,9 @@ def processRaw(params,itemType, mode = "curr"):
         # Cause all warnings to always be triggered.
         warnings.simplefilter("always")
         transformed = pd.DataFrame(-np.log(testSeries) )
+        if any(transformed<0):
+            warnings.warn("spot cross quasi-bounded!")
+            
     if len(w) != 0:
         print(w[0])
         print(w[0].message)
@@ -198,7 +204,7 @@ def processRaw(params,itemType, mode = "curr"):
     
         
         
-def updateRaw(itemType,region,mode):
+def updateRaw(itemType,region,mode = "default"):
     #sdList = [1.5,1.75,2,2.5]
     #dayList = [30,50,60,90,120]
     indexList = getItemNameFromJson(itemType,region)
@@ -221,8 +227,8 @@ def updateRaw(itemType,region,mode):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
-    for mode in ["lower"]:
-        itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
-        updateRaw(itemType,region, mode = mode)
+    #for mode in ["lower"]:
+    itemType = "index"
+    region = ""
+    updateRaw(itemType,region)
 
