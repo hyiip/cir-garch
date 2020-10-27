@@ -115,6 +115,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
+        
     data = result[[parameter, parameter + "_z"]]
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
@@ -174,6 +175,8 @@ def plotGraphParameter(params,result,parameter,itemmode):
     plt.autoscale(enable=True, axis='x', tight=True)                           
     ax1.set_xlabel("Date", fontsize = fontsize)
     ax1.set_ylabel(parameter, fontsize = fontsize)
+    if (item == "F91010Y") and (SD == 8) and (MA == 30) and (parameter == "theta"):
+        ax1.set_ylim(0.375,0.43)
     ax1.right_ax.set_ylabel("z score", fontsize = fontsize)
     ax1.title.set_fontsize(fontsize)
     for item in (ax1.get_legend().get_texts()):
@@ -365,10 +368,10 @@ def merger(itemType , region, mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    pool = multiprocessing.Pool(processes=cpuCount)
-    pool.map(relabelAndPlot,paramList)
-    #for param in paramList:
-    #    relabelAndPlot(param)
+    #pool = multiprocessing.Pool(processes=cpuCount)
+    #pool.map(relabelAndPlot,paramList)
+    for param in paramList:
+        relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':

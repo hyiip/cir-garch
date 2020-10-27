@@ -1,35 +1,11 @@
 [
     {
         "bondlower": {
-            "name": "F91002Y_mod",
+            "name": "F91010Y",
             "parameter": [
 				{
-                    "SD": 68,
-                    "day": 60
-                },
-				{
-                    "SD": 60,
+                    "SD": 8,
                     "day": 30
-                },
-				{
-                    "SD": 44,
-                    "day": 20
-                },
-				{
-                    "SD": 28,
-                    "day": 10
-                }
-            ],
-            "region": "GER"
-        }
-    },
-    {
-        "bondlower": {
-            "name": "F91010Y_mod",
-            "parameter": [
-				{
-                    "SD": 0,
-                    "day": 1
                 }
             ],
             "region": "GER"
