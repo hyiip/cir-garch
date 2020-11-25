@@ -88,6 +88,7 @@ def resultmerge(fullParams):
         bank = bank.drop(bank.index[0:day-1])
         bank = bank[0:len(table.index)]
         all = pd.concat([table,bounded,bank], axis=1)
+        all["thickness"] = (all["S_U"] - all["S_L"])/2
 
     all["cir_kappa_lb"] = all["cir_kappa"] - 1.96 * all["cir_kappa_sd"]
     all["cir_kappa_ub"] = all["cir_kappa"] + 1.96 * all["cir_kappa_sd"]
@@ -164,7 +165,7 @@ def resultMerger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["hybrid"]:
+    for mode in ["hybrid","hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "JAP"
+        region = "GER"
         resultMerger(itemType,region, mode = mode)

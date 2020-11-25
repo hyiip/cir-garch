@@ -1,0 +1,71 @@
+[
+    {
+        "bondhybrid": {
+            "name": "F91002Y",
+            "parameter": [
+                {
+                    "SD": 2.5,
+                    "day": 30,
+					"tol": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 60,
+					"tol": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 90,
+					"tol": 0.6
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondhybrid": {
+            "name": "F91003M",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.75
+                },
+                {
+                    "SD": 3,
+                    "day": 60,
+					"tol": 0.75
+                }
+            ],
+            "region": "GER"
+        }
+    },
+    {
+        "bondhybrid": {
+            "name": "F91010Y",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.6
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.75
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

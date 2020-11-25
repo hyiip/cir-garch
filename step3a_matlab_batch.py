@@ -69,7 +69,7 @@ def matlabBatch(itemType,region,mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    for mode in ["hybrid"]:
+    for mode in ["hybrid","hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "JAP"
+        region = "GER"
         matlabBatch(itemType,region, mode = mode)

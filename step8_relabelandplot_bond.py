@@ -84,6 +84,8 @@ def plotGraphSetting(params,result,setting,itemmode):
         ax1 = data.plot(title = title[setting], grid=True, fontsize=fontsize, secondary_y="S/S_A", figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
 
         ax1.right_ax.set_ylabel("S/S_A", fontsize = fontsize)
+        if max(result["S/S_A"]>10):
+            ax1.right_ax.set_ylim(-1,6)
         #ax1.right_ax.set_ylim(0,4)
     if "bond" in itemType:
         ylabalT = "Bond Yield"
@@ -119,6 +121,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data = result[[parameter, parameter + "_z"]]
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
+    data = data[data[parameter] < 10]
     if itemType == "exchange" or item == "F91010Y_mod":
         suffix = ""
     elif epsilon != 0:
@@ -184,7 +187,96 @@ def plotGraphParameter(params,result,parameter,itemmode):
     fig1 = ax1.get_figure()
     fig1.autofmt_xdate()
     return fig1
+def plotGraphCompare(params,result,parameter,itemmode):
+    mode = params[0]
+    item = params[1]
+    SD = params[2]
+    MA = params[3]
+    itemType = params[4]
+    try:
+        epsilon = float(params[5])
+    except:
+        epsilon = 0
+    '''column name: [result.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', 'Band Width', "s","Leakage Ratio",
+        "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
+        "theta","theta_SE","theta_lb","theta_ub","theta_z",
+        "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
+    if epsilon == 0:
+        data = result[[parameter,result.columns[0]]]
+    else:
+        data = result[[parameter,result.columns[0],"{}MA".format(MA)]]
+        data["Upper Limit"] = epsilon
+        data["Lower Limit"] = -epsilon
+    data = data.iloc[749:]
+    data = data[data[parameter] < 10]
+    if itemType == "exchange" or item == "F91010Y_mod":
+        suffix = ""
+    elif epsilon != 0:
+        suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
+    else:
+        suffix = "(SD = {}, MA = {})".format(SD, MA)
+    if item == "F91010Y_mod":
+        item = item.replace("_mod","")
+        title = "{}ing windows, {} - {} and the spot {}".format(mode.capitalize(),item, parameter, suffix)
+    elif itemmode == "upper":
+        title = "{}ing windows, quasi-bounded fixed at S_U, {} - {} and the spot {}".format(mode.capitalize(),item, parameter, suffix)
+    elif itemmode == "lower":
+        title = "{}ing windows, quasi-bounded fixed at zero, {} - {} and the spot {}".format(mode.capitalize(),item, parameter, suffix)
+    else:
+        title = "{}ing windows, {} - {} and the spot {}".format(mode.capitalize(),item, parameter, suffix)
 
+    '''varMain = go.Scatter(
+        name=parameter,
+        x=data.index.tolist(),
+        y=data[parameter],
+        hoverlabel = dict(namelength = -1),
+        mode='lines',
+        line=dict(color='rgb(31, 119, 180)'),
+        )
+    zPlot = go.Scatter(
+        name=parameter + "_zscore (right)",
+        x=data.index.tolist(),
+        y=data[parameter + "_z"],
+        hoverlabel = dict(namelength = -1),
+        mode='lines',
+        yaxis='y2',
+        line=dict(color='rgb(255, 127, 14)', width = 2),
+         )
+    plotData = [varMain,zPlot]
+    layout = go.Layout(
+            yaxis=dict(title=parameter, rangemode='nonnegative',
+                showgrid=True,
+                showline=True,
+                gridcolor='rgb(0, 0, 0)',),
+            title=title,
+            legend=dict(orientation="h"),
+            yaxis2=dict(
+                overlaying='y',
+                side='right',
+                showgrid=False,
+                showline=False,
+                title = "z score",
+            ),
+            xaxis_title="Date",
+            template="plotly_white",
+            )
+    fig = go.Figure(data=plotData, layout=layout)'''
+    if epsilon == 0:
+        ax1 = data.plot(title =  title, grid=True, secondary_y=[result.columns[0]], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+    else:
+        ax1 = data.plot(title =  title, grid=True, secondary_y=[result.columns[0],"{}MA".format(MA),"Upper Limit","Lower Limit"], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+    plt.autoscale(enable=True, axis='x', tight=True)                           
+    ax1.set_xlabel("Date", fontsize = fontsize)
+    ax1.set_ylabel(parameter, fontsize = fontsize)
+    if (item == "F91010Y") and (SD == 8) and (MA == 30) and (parameter == "theta"):
+        ax1.set_ylim(0.375,0.43)
+    ax1.right_ax.set_ylabel("Spot", fontsize = fontsize)
+    ax1.title.set_fontsize(fontsize)
+    for item in (ax1.get_legend().get_texts()):
+        item.set_fontsize(fontsize)
+    fig1 = ax1.get_figure()
+    fig1.autofmt_xdate()
+    return fig1
 def relabelAndPlot(fullParams):
     params = fullParams[0]
     itemmode = fullParams[1]
@@ -209,12 +301,12 @@ def relabelAndPlot(fullParams):
     if not epsilon == 0:
         filepath = {
             "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}tol{epsilon}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
-            "result": "{}/updating/tor{}/result/SD{}/day{}/{}/".format(itemType,epsilon,SD,day,mode),
+            "result": "{}/updating/tol{}/result/SD{}/day{}/{}/".format(itemType,epsilon,SD,day,mode),
             "output_graph": "output/{itemType}/graph/{item}/day{day}tol{epsilon}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
             "output_result": "output/{itemType}/result/{item}/day{day}tol{epsilon}SD{SDint}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
             }
-        resultFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
-        graphName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
+        resultFile =  "{}_tol{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
+        graphName = "{}_{}_SD{}day{}tol{}".format(mode,item,SDint,day,epsilon)
         infographName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
         if not "exchange" == itemType:
@@ -267,6 +359,10 @@ def relabelAndPlot(fullParams):
         fig.savefig(filepath["graph"] + "{}_{}.png".format(graphName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.png".format(graphName,var) )
         fig.savefig(filepath["output_graph"] + "{}_{}.eps".format(graphName,var), format='eps' )
+        comp_fig = plotGraphCompare(params,result, var,itemmode)
+        comp_fig.savefig(filepath["graph"] + "{}_{}_compare.png".format(graphName,var) )
+        comp_fig.savefig(filepath["output_graph"] + "{}_{}_compare.png".format(graphName,var) )
+        comp_fig.savefig(filepath["output_graph"] + "{}_{}_compare.eps".format(graphName,var), format='eps' )
     
     if itemType == "exchange":
         setting = ["main","s","leakage"]
@@ -329,11 +425,11 @@ def tablePlot(params):
     if not epsilon == 0:
         filepath = {
             "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}tol{epsilon}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon),
-            "table": "{itemType}/updating/tor{epsilon}/table/SD{SD}/day{day}/".format(itemType = itemType,epsilon = epsilon,SD = SD,day = day),
+            "table": "{itemType}/updating/tol{epsilon}/table/SD{SD}/day{day}/".format(itemType = itemType,epsilon = epsilon,SD = SD,day = day),
             "output_graph": "output/{itemType}/graph/{item}/day{day}tol{epsilon}SD{SDint}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon),
             "output_table": "output/{itemType}/table/{item}/day{day}tol{epsilon}SD{SDint}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon),
             }
-        tableFile =  "tor{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
+        tableFile =  "tol{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
         graphName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
         infographName = "{}_{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
@@ -368,16 +464,16 @@ def merger(itemType , region, mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    #pool = multiprocessing.Pool(processes=cpuCount)
-    #pool.map(relabelAndPlot,paramList)
-    for param in paramList:
-        relabelAndPlot(param)
+    pool = multiprocessing.Pool(processes=cpuCount)
+    pool.map(relabelAndPlot,paramList)
+    #for param in paramList:
+    #    relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["lower"]:
-        itemType = "bond{mode}2".format(mode=mode)
+    for mode in ["hybrid","hybrid2"]:
+        itemType = "bond{mode}".format(mode=mode)
         region = "GER"
         #itemType = "vixir"
         #region = ""
