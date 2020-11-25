@@ -221,8 +221,8 @@ def updateRaw(itemType,region,mode):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
-    for mode in ["lower"]:
+    for mode in ["hybrid"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        region = "JAP"
         updateRaw(itemType,region, mode = mode)
 

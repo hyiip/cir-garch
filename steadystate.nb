@@ -1,0 +1,206 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7664,        196]
+NotebookOptionsPosition[      7215,        179]
+NotebookOutlinePosition[      7581,        195]
+CellTagsIndexPosition[      7538,        192]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SL", " ", "=", " ", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SU", " ", "=", " ", "0.5"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Omega]", "[", 
+   RowBox[{"\[Kappa]_", ",", "\[Theta]_", ",", "\[Sigma]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"2", "*", "\[Kappa]", "*", 
+    RowBox[{"\[Theta]", "/", 
+     RowBox[{"(", 
+      RowBox[{"\[Sigma]", "^", "2"}], ")"}]}]}], "-", 
+   "1"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"s", "[", 
+   RowBox[{"S_", ",", " ", "SU_", ",", " ", "SL_"}], "]"}], ":=", " ", 
+  RowBox[{"-", 
+   RowBox[{"Log", "[", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"SU", "-", "S"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"SU", "-", "SL"}], ")"}]}], ")"}], 
+    "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{
+   "S_", ",", "\[Kappa]_", ",", "\[Theta]_", ",", "\[Sigma]_", ",", "SU_", 
+    ",", " ", "SL_"}], "]"}], ":=", 
+  RowBox[{"Exp", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Omega]", "[", 
+      RowBox[{"\[Kappa]", ",", "\[Theta]", ",", "\[Sigma]"}], "]"}], "*", 
+     RowBox[{"Log", "[", 
+      RowBox[{"s", "[", 
+       RowBox[{"S", ",", "SU", ",", "SL"}], "]"}], "]"}]}], "-", 
+    RowBox[{"LogGamma", "[", 
+     RowBox[{
+      RowBox[{"\[Omega]", "[", 
+       RowBox[{"\[Kappa]", ",", "\[Theta]", ",", "\[Sigma]"}], "]"}], "+", 
+      "1"}], "]"}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"\[Omega]", "[", 
+        RowBox[{"\[Kappa]", ",", "\[Theta]", ",", "\[Sigma]"}], "]"}], "+", 
+       "1"}], ")"}], "*", 
+     RowBox[{"Log", "[", 
+      RowBox[{"2", "*", 
+       RowBox[{"\[Kappa]", "/", 
+        RowBox[{"\[Sigma]", "^", "2"}]}]}], "]"}]}], "-", 
+    RowBox[{"2", "*", 
+     RowBox[{"\[Kappa]", "/", 
+      RowBox[{"\[Sigma]", "^", "2"}]}], "*", 
+     RowBox[{"s", "[", 
+      RowBox[{"S", ",", "SU", ",", "SL"}], "]"}]}], "-", 
+    RowBox[{"Log", "[", 
+     RowBox[{"SU", "-", "S"}], "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"f", "[", 
+      RowBox[{
+      "S", ",", "\[Kappa]", ",", "\[Theta]", ",", "\[Sigma]", ",", "SU", ",", 
+       "SL"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"S", ",", "SL", ",", "SU"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "Full"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Kappa]", ",", "0.2"}], "}"}], ",", "0", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", "0.2"}], "}"}], ",", "0", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Sigma]", ",", "0.2"}], "}"}], ",", "0", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"SU", ",", "5", ",", "15"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.813406855057463*^9, 3.813406903920966*^9}, {
+  3.813407125066825*^9, 3.813407274883749*^9}, {3.813407443672229*^9, 
+  3.813407780504716*^9}, {3.8134078233128424`*^9, 3.8134078264007463`*^9}, {
+  3.813407988401142*^9, 3.813408033268794*^9}, {3.813408462075205*^9, 
+  3.813408503043762*^9}, {3.813408548796974*^9, 3.813408589923615*^9}, {
+  3.813408691426573*^9, 3.813408719612977*^9}, {3.813408753513229*^9, 
+  3.813408774173843*^9}},
+ CellLabel->"In[93]:=",ExpressionUUID->"f4abb6b5-976d-4038-9ae9-ccb7f3ab4914"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`SU$$ = 5., $CellContext`\[Theta]$$ = 
+    0.25, $CellContext`\[Kappa]$$ = 
+    0.07200000000000001, $CellContext`\[Sigma]$$ = 0.136, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"\:672a\:547d\:540d\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Kappa]$$], 0.2}, 0, 1}, {{
+       Hold[$CellContext`\[Theta]$$], 0.2}, 0, 1}, {{
+       Hold[$CellContext`\[Sigma]$$], 0.2}, 0, 1}, {
+      Hold[$CellContext`SU$$], 5, 15}}, Typeset`size$$ = {360., {111., 115.}},
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`\[Kappa]$270164$$ = 0, $CellContext`\[Theta]$270165$$ =
+     0, $CellContext`\[Sigma]$270166$$ = 0, $CellContext`SU$270167$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`SU$$ = 5, $CellContext`\[Theta]$$ = 
+        0.2, $CellContext`\[Kappa]$$ = 0.2, $CellContext`\[Sigma]$$ = 0.2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`\[Kappa]$$, $CellContext`\[Kappa]$270164$$, 0], 
+        Hold[$CellContext`\[Theta]$$, $CellContext`\[Theta]$270165$$, 0], 
+        Hold[$CellContext`\[Sigma]$$, $CellContext`\[Sigma]$270166$$, 0], 
+        Hold[$CellContext`SU$$, $CellContext`SU$270167$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[
+        $CellContext`f[$CellContext`S, $CellContext`\[Kappa]$$, $CellContext`\
+\[Theta]$$, $CellContext`\[Sigma]$$, $CellContext`SU$$, $CellContext`SL], \
+{$CellContext`S, $CellContext`SL, $CellContext`SU$$}, PlotRange -> Full], 
+      "Specifications" :> {{{$CellContext`\[Kappa]$$, 0.2}, 0, 
+         1}, {{$CellContext`\[Theta]$$, 0.2}, 0, 
+         1}, {{$CellContext`\[Sigma]$$, 0.2}, 0, 1}, {$CellContext`SU$$, 5, 
+         15}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {262., 268.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.8134068607651854`*^9, 3.8134069043754945`*^9, {3.8134077658499317`*^9, 
+   3.8134077966973085`*^9}, 3.81340782703018*^9, {3.8134079565085735`*^9, 
+   3.8134079579891987`*^9}, 3.813408034536238*^9, {3.813408097666053*^9, 
+   3.813408099754001*^9}, {3.813408435731185*^9, 3.8134085033882313`*^9}, {
+   3.813408554453498*^9, 3.813408605177045*^9}, {3.813408709097157*^9, 
+   3.8134087198135653`*^9}, 3.813408776096285*^9, 3.8134134918380456`*^9, 
+   3.8134143976608515`*^9},
+ CellLabel->"Out[98]=",ExpressionUUID->"fc0a296c-a934-4656-9362-e5d53036ff2f"]
+}, Open  ]]
+},
+WindowSize->{751, 793},
+WindowMargins->{{Automatic, 575}, {Automatic, 83}},
+FrontEndVersion->"11.3 \:95dc\:65bc  Microsoft Windows (64-bit) (2018\:5e743\
+\:67086\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 3427, 96, 253, "Input",ExpressionUUID->"f4abb6b5-976d-4038-9ae9-ccb7f3ab4914"],
+Cell[4010, 120, 3189, 56, 582, "Output",ExpressionUUID->"fc0a296c-a934-4656-9362-e5d53036ff2f"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

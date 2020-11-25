@@ -1,0 +1,30 @@
+[
+    {
+        "bondhybrid": {
+            "name": "GTJPY2Y",
+            "parameter": [
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.25
+                },
+                {
+                    "SD": 3,
+                    "day": 30,
+					"tol": 0.1
+                },
+                {
+                    "SD": 3,
+                    "day": 50,
+					"tol": 0.25
+                },
+                {
+                    "SD": 3,
+                    "day": 50,
+					"tol": 0.26
+                }
+            ],
+            "region": "JAP"
+        }
+    }
+]

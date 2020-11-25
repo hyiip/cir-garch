@@ -1,0 +1,14 @@
+[
+    {
+        "bondlower2": {
+            "name": "F91010Y",
+            "parameter": [
+				{
+                    "SD": 8,
+                    "day": 30
+                }
+            ],
+            "region": "GER"
+        }
+    }
+]

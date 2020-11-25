@@ -34,11 +34,11 @@ def matlabUpdate(fullParams):
         itemmode =  itemmode
     #MApath = "day" + MA + "/"
     if not epsilon == 0:
-        filenames = "cir_{}_bounded_tor{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
+        filenames = "cir_{}_bounded_tol{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
         
-        originalPath = "{}/original/tor{}/temp/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
-        updatePath = "{}/updating/tor{}/temp/new/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
-        newPath = "{}/updating/tor{}/temp/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
+        originalPath = "{}/original/tol{}/temp/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
+        updatePath = "{}/updating/tol{}/temp/new/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
+        newPath = "{}/updating/tol{}/temp/SD{}/day{}/{}/".format(itemType,epsilon,SD,MA,mode)
     
     else:
         if not itemmode == "":
@@ -87,7 +87,7 @@ def matlabUpdateMain(itemType , region,mode="hybrid"):
     
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["lower"]:
-        itemType = "bond{}".format(mode)
-        region = "GER"
+    for mode in ["hybrid"]:
+        itemType = "bond{mode}".format(mode = mode)
+        region = "JAP"
         matlabUpdateMain(itemType,region, mode = mode)

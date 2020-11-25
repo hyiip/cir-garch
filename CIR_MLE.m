@@ -9,9 +9,9 @@ function status =  CIR_MLE(SD,MA,offset,itemName, itemType, epsilon)
 
     TimeStep = 1;                       
     bd = 1e-6;
-    prefixString = sprintf("%s/updating/tor%s/", itemType,epsilon);
+    prefixString = sprintf("%s/updating/tol%s/", itemType,epsilon);
     locString = sprintf("%stoanalysis/SD%d/day%d/",prefixString, SD*100, MA);
-    rawName = sprintf("bounded_tor%s_day%d_SD%d_%s.csv", epsilon,MA,SD*100,itemName);
+    rawName = sprintf("bounded_tol%s_day%d_SD%d_%s.csv", epsilon,MA,SD*100,itemName);
     filename = sprintf("%s%s",locString,rawName);
     rollPath = sprintf("%stemp/new/SD%d/day%d/roll/",prefixString,SD*100, MA);
     expandPath = sprintf("%stemp/new/SD%d/day%d/expand/",prefixString,SD*100, MA);

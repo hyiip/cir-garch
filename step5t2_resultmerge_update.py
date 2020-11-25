@@ -45,13 +45,14 @@ def resultmerge(fullParams):
         itemmode =  itemmode
     
     if not epsilon == 0:
-        resultNames = "{}_tor{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
-        pathname = itemType + "/updating/tor{}/result/".format(epsilon) + pathString
+        resultNames = "{}_tol{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
+        pathname = itemType + "/updating/tol{}/result/".format(epsilon) + pathString
     
-        matlabname = "cir_{}_bounded_tor{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
-        matlabPath = itemType + "/updating/tor{}/temp/".format(epsilon) + pathString
+        matlabname = "cir_{}_bounded_tol{}_day{}_SD{}_{}.csv".format(mode,epsilon,MA,SD,item)
+        matlabPath = itemType + "/updating/tol{}/temp/".format(epsilon) + pathString
         
-        tablePath = itemType + "/updating/tor{}/table/".format(epsilon)+ "SD{}/day{}/".format(SD,MA)
+        tableName = "tol{}_day{}_SD{}_{}.csv".format(epsilon,MA,SD,item)
+        tablePath = itemType + "/updating/tol{}/table/".format(epsilon)+ "SD{}/day{}/".format(SD,MA)
     else:
         
         if not itemmode == "":
@@ -100,7 +101,7 @@ def resultmerge(fullParams):
         "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
     '''
     if itemmode not in ["upper","lower"]:
-        if ("bond" not in itemType):
+        if ("bond" not in itemType) or ("GER" not in itemType):
             all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage",
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
                 "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
@@ -163,7 +164,7 @@ def resultMerger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["lower"]:
+    for mode in ["hybrid"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        region = "JAP"
         resultMerger(itemType,region, mode = mode)
