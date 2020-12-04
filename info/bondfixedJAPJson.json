@@ -1,0 +1,38 @@
+[
+    {
+        "bondfixed": {
+            "name": "GTJPY1Y",
+            "parameter": [
+                {
+                    "SD": 0,
+                    "day": 1
+                }
+            ],
+            "region": "JAP"
+        }
+    },
+    {
+        "bondfixed": {
+            "name": "GTJPY2Y",
+            "parameter": [
+                {
+                    "SD": 0,
+                    "day": 1
+                }
+            ],
+            "region": "JAP"
+        }
+    },
+    {
+        "bondfixed": {
+            "name": "GTJPY5Y",
+            "parameter": [
+                {
+                    "SD": 0,
+                    "day": 1
+                }
+            ],
+            "region": "JAP"
+        }
+    }
+]

@@ -165,7 +165,7 @@ def resultMerger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    for mode in ["hybrid","hybrid2"]:
+    for mode in ["fixed"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        region = "JAP"
         resultMerger(itemType,region, mode = mode)

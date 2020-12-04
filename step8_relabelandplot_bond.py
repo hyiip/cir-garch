@@ -28,7 +28,7 @@ def plotGraphSetting(params,result,setting,itemmode):
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
         "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]'''
-    if itemType == "exchange" or item == "F91010Y_mod":
+    if itemType == "exchange" or item == "F91010Y_mod" or itemType == "bondfixedJAP":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
@@ -57,6 +57,8 @@ def plotGraphSetting(params,result,setting,itemmode):
         if "bond" in itemType:
             if itemmode in ["upper","lower"]:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U"]]
+            elif itemType == "bondfixedJAP":
+                data = result[[result.columns[0], "S_U", "S_L"]]
             else:
                 data = result[[result.columns[0], "{}MA".format(MA),"S_U", "S_L"]]
         elif itemType == "exchange":
@@ -122,7 +124,7 @@ def plotGraphParameter(params,result,parameter,itemmode):
     data["z-score > 1.96"] = 1.96
     data = data.iloc[749:]
     data = data[data[parameter] < 10]
-    if itemType == "exchange" or item == "F91010Y_mod":
+    if itemType == "exchange" or item == "F91010Y_mod" or itemType == "bondfixedJAP":
         suffix = ""
     elif epsilon != 0:
         suffix = "(SD = {}, MA = {}, Tolerance  = {})".format(SD, MA, epsilon)
@@ -309,7 +311,7 @@ def relabelAndPlot(fullParams):
         graphName = "{}_{}_SD{}day{}tol{}".format(mode,item,SDint,day,epsilon)
         infographName = "{}_SD{}day{}tol{}".format(item,SDint,day,epsilon)
     else:
-        if not "exchange" == itemType:
+        if not "exchange" == itemType or not itemType == "bondfixedJAP":
             filepath = {
                 "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,mode = mode),
                 "result": "{itemType}/updating/result/SD{SD}/day{day}/{mode}/".format(itemType = itemType,SD = SD,day = day,mode = mode),
@@ -323,12 +325,12 @@ def relabelAndPlot(fullParams):
                 "output_graph": "output/{itemType}/graph/{item}/{mode}/".format(itemType = itemType,item = item,mode = mode),
                 "output_result": "output/{itemType}/result/{item}/{mode}/".format(itemType = itemType,item = item,mode = mode),
                 }
-
+        print(itemType)
         if "bond" not in itemType:
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
             infographName = "{}_SD{}day{}".format(item,SDint,day)
-        elif "exchange" in itemType:
+        elif "exchange" in itemType or  itemType == "bondfixedJAP":
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}".format(mode,item)
             infographName = "{}".format(item)
@@ -364,7 +366,7 @@ def relabelAndPlot(fullParams):
         comp_fig.savefig(filepath["output_graph"] + "{}_{}_compare.png".format(graphName,var) )
         comp_fig.savefig(filepath["output_graph"] + "{}_{}_compare.eps".format(graphName,var), format='eps' )
     
-    if itemType == "exchange":
+    if itemType == "exchange" or itemType == "bondfixedJAP":
         setting = ["main","s","leakage"]
     else:
         setting = ["main","s","leakage","normalize"]
@@ -464,17 +466,17 @@ def merger(itemType , region, mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    pool = multiprocessing.Pool(processes=cpuCount)
-    pool.map(relabelAndPlot,paramList)
-    #for param in paramList:
-    #    relabelAndPlot(param)
+    #pool = multiprocessing.Pool(processes=cpuCount)
+    #pool.map(relabelAndPlot,paramList)
+    for param in paramList:
+        relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    for mode in ["hybrid","hybrid2"]:
-        itemType = "bond{mode}".format(mode=mode)
-        region = "GER"
+    for mode in ["fixed"]:
+        itemType = "bond{mode}".format(mode = mode)
+        region = "JAP"
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)

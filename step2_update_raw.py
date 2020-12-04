@@ -155,6 +155,13 @@ def processRaw(params,itemType, mode = "curr"):
             thickness[i] = abs(wide) 
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
 
+    elif mode == "fixed":
+        SU = pd.Series(Sm[MAname]*0+0.5, name = "S_U")
+        SL = pd.Series(Sm[MAname]*0-0.5, name = "S_L")
+        if item == "F91010Y_mod":
+            testSeries = np.exp(-Si.iloc[:,0])
+        else:
+            testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
     elif mode == "lower":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")
@@ -238,8 +245,8 @@ def updateRaw(itemType,region,mode):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
-    for mode in ["hybrid","hybrid2"]:
+    for mode in ["fixed"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        region = "JAP"
         updateRaw(itemType,region, mode = mode)
 
