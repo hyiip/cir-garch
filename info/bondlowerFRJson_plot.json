@@ -1,0 +1,26 @@
+[
+    {
+        "bondlower": {
+            "name": "GTFRF2Y",
+            "parameter": [
+                {
+                    "SD": 8,
+                    "day": 30
+                },
+                {
+                    "SD": 9,
+                    "day": 50
+                },
+                {
+                    "SD": 9,
+                    "day": 60
+                },
+                {
+                    "SD": 7.5,
+                    "day": 30
+                }
+            ],
+            "region": "FR"
+        }
+    }
+]

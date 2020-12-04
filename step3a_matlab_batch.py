@@ -71,5 +71,5 @@ if __name__ == '__main__':
     #matlabBatch(itemType , region)
     for mode in ["lower"]:
         itemType = "bond{}".format(mode)
-        region = "GER"
+        region = "FR"
         matlabBatch(itemType,region, mode = mode)

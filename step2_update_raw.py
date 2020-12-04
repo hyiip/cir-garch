@@ -133,13 +133,35 @@ def processRaw(params,itemType, mode = "curr"):
         wide = 0
         for i in range(0,len(Sm[MAname])):
             if abs(Sm[MAname][i]) >= epsilon:
-                wide = 0.25*SD * Sm[MAname][i]
+                wide = 0.25 * SD * Sm[MAname][i]
             
             SU[i] = Sm[MAname][i] + abs(wide) 
             SL[i] = Sm[MAname][i] - abs(wide)
             thickness[i] = abs(wide) 
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+    elif mode == "hybrid2":
+        SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
+        SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
+        thickness = pd.Series(Sm[MAname]*(1-0.25*SD), name = "thickness").copy()
 
+        wide = 0
+        for i in range(0,len(Sm[MAname])):
+            if abs(Sm[MAname][i]) >= epsilon:
+                wide = 0.25 * SD * Sm[MAname][i]
+            else:
+                wide = 0.25 * SD * epsilon
+            SU[i] = Sm[MAname][i] + abs(wide) 
+            SL[i] = Sm[MAname][i] - abs(wide)
+            thickness[i] = abs(wide) 
+        testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+
+    elif mode == "fixed":
+        SU = pd.Series(Sm[MAname]*0+0.5, name = "S_U")
+        SL = pd.Series(Sm[MAname]*0-0.5, name = "S_L")
+        if item == "F91010Y_mod":
+            testSeries = np.exp(-Si.iloc[:,0])
+        else:
+            testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
     elif mode == "lower":
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*0, name = "S_L")
@@ -175,11 +197,13 @@ def processRaw(params,itemType, mode = "curr"):
         # Cause all warnings to always be triggered.
         warnings.simplefilter("always")
         transformed = pd.DataFrame(-np.log(testSeries) )
+        if any(transformed[0]<0):
+            warnings.warn("negative x")
     if len(w) != 0:
         print(w[0])
         print(w[0].message)
         logging.warning("{} - ".format(params) +f'{w[0].category.__name__}: {str(w[0].message)}')
-    transformed.columns = ["bounded_x"]
+    #transformed.columns = ["bounded_x"]
     
     #SU = Sm[MAname].apply(lambda x: (1+0.25*SD) * x if (1+0.25*SD) * abs(x)>=epsilon else epsilon)
     #SL = Sm[MAname].apply(lambda x: (1-0.25*SD) * x if (1+0.25*SD) * abs(x)>=epsilon else -epsilon)
@@ -223,6 +247,6 @@ if __name__ == '__main__':
     #updateRaw(itemType,region)
     for mode in ["lower"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        region = "FR"
         updateRaw(itemType,region, mode = mode)
 

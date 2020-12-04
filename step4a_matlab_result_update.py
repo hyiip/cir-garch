@@ -89,5 +89,5 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["lower"]:
         itemType = "bond{}".format(mode)
-        region = "GER"
+        region = "FR"
         matlabUpdateMain(itemType,region, mode = mode)

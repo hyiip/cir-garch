@@ -164,6 +164,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
     for mode in ["lower"]:
-        itemType = "bond{mode}".format(mode = mode)
-        region = "GER"
+        itemType = "bond{}".format(mode)
+        region = "FR"
         resultMerger(itemType,region, mode = mode)

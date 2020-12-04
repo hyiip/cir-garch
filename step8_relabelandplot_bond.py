@@ -377,8 +377,8 @@ def merger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["lower"]:
-        itemType = "bond{mode}".format(mode=mode)
-        region = "GER"
+        itemType = "bond{}".format(mode)
+        region = "FR"
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)
