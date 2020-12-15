@@ -206,9 +206,7 @@ def plotGraphCompare(params,result,parameter,itemmode):
     if epsilon == 0:
         data = result[[parameter,result.columns[0]]]
     else:
-        data = result[[parameter,result.columns[0],"{}MA".format(MA)]]
-        data["Upper Limit"] = epsilon
-        data["Lower Limit"] = -epsilon
+        data = result[[parameter,result.columns[0],"S_U","S_L"]]
     data = data.iloc[749:]
     data = data[data[parameter] < 10]
     if itemType == "exchange" or item == "F91010Y_mod":
@@ -266,7 +264,7 @@ def plotGraphCompare(params,result,parameter,itemmode):
     if epsilon == 0:
         ax1 = data.plot(title =  title, grid=True, secondary_y=[result.columns[0]], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
     else:
-        ax1 = data.plot(title =  title, grid=True, secondary_y=[result.columns[0],"{}MA".format(MA),"Upper Limit","Lower Limit"], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
+        ax1 = data.plot(title =  title, grid=True, secondary_y=[result.columns[0],"S_U","S_L"], fontsize=fontsize,figsize=(16, 8), xticks = (np.arange(0, len(data)+1, 250.0)))
     plt.autoscale(enable=True, axis='x', tight=True)                           
     ax1.set_xlabel("Date", fontsize = fontsize)
     ax1.set_ylabel(parameter, fontsize = fontsize)
@@ -466,17 +464,17 @@ def merger(itemType , region, mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    #pool = multiprocessing.Pool(processes=cpuCount)
-    #pool.map(relabelAndPlot,paramList)
-    for param in paramList:
-        relabelAndPlot(param)
+    pool = multiprocessing.Pool(processes=cpuCount)
+    pool.map(relabelAndPlot,paramList)
+    #for param in paramList:
+    #    relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "FR"
+        region = "JAP"
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)

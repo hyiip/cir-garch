@@ -71,5 +71,5 @@ if __name__ == '__main__':
     #matlabBatch(itemType , region)
     for mode in ["hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "FR"
+        region = "SWD"
         matlabBatch(itemType,region, mode = mode)

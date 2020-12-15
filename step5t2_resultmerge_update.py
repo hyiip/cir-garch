@@ -167,5 +167,5 @@ if __name__ == '__main__':
     #resultMerger(itemType , region)
     for mode in ["hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "FR"
+        region = "SWD"
         resultMerger(itemType,region, mode = mode)

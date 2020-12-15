@@ -247,6 +247,6 @@ if __name__ == '__main__':
     #updateRaw(itemType,region)
     for mode in ["hybrid2"]:
         itemType = "bond{mode}".format(mode = mode)
-        region = "FR"
+        region = "SWD"
         updateRaw(itemType,region, mode = mode)
 
