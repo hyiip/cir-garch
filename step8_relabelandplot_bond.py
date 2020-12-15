@@ -368,10 +368,10 @@ def merger(itemType , region, mode="hybrid"):
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
-    #pool = multiprocessing.Pool(processes=cpuCount)
-    #pool.map(relabelAndPlot,paramList)
-    for param in paramList:
-        relabelAndPlot(param)
+    pool = multiprocessing.Pool(processes=cpuCount)
+    pool.map(relabelAndPlot,paramList)
+    #for param in paramList:
+    #    relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':

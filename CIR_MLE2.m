@@ -8,7 +8,7 @@ function status =  CIR_MLE2(roll_expand,SD,MA,offset,itemName, itemType,mode)
     ub = [100.0 10.0 10.0];        
 
     TimeStep = 1;                       
-    bd = 1e-6;
+    bd = 1e-9;
     prefixString = sprintf("%s/updating/", itemType);
     locString = sprintf("%stoanalysis/SD%d/day%d/",prefixString, SD*100, MA);
     rawName = sprintf("bounded_%sday%d_SD%d_%s.csv",mode,MA,SD*100,itemName);
