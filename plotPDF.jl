@@ -36,8 +36,12 @@ f2(S;SU,SL,kappa, theta, sigma) =  exp(logf2(S, SU = SU,SL = SL,kappa = kappa, t
 #kappa = 0.07;
 #sigma = 0.08;
 
-kappa = 0.072;
-sigma = 0.07;
+kappa = 0.03;
+sigma = 0.14;
+#kappa = 0.072;
+#sigma = 0.14;
+#kappa = 0.072;
+#sigma = 0.14;
 
 #kappa = 0.059;
 #sigma = 0.045;
@@ -51,7 +55,7 @@ sigma = 0.07;
 #kappa = 0.052;
 #sigma = 0.052;
 
-panelIndex = "B"
+panelIndex = "C"
 
 println(quadgk(x -> f2(x,SU = SU,SL = SL,kappa = kappa, theta = 0.3, sigma = sigma), SL, SU))
 
@@ -60,7 +64,7 @@ plot(S-> f2(S,SU = SU, SL = SL, kappa = kappa, theta = 0.25, sigma = sigma), SL,
 plot!(S-> f2(S,SU = SU, SL = SL, kappa = kappa, theta = 0.75, sigma = sigma), SL, SU,
             label="θ = 0.75", linestyle = :dash, linecolor = :red)
 plot!(S-> f2(S,SU = SU, SL = SL, kappa = kappa, theta = 1.5, sigma = sigma), SL, SU,
-            label="θ = 1.5", linestyle = :dashdot, linecolor = :black, title = "Panel $panelIndex\n κ = $kappa, σ = $sigma", legend=:top, padding = (0.0, 0.0))
+            label="θ = 1.5", linestyle = :dashdot, linecolor = :black, title = "Panel $panelIndex\n κ = $kappa, σ = $sigma, S_U = $SU", legend=:top, padding = (0.0, 0.0))
 
 #=
 plot(S-> f2(S,SU = SU, SL = SL, kappa = kappa, theta = 0.25, sigma = sigma), SL, SU,
