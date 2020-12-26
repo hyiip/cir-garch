@@ -69,6 +69,6 @@ def matlabBatch(itemType,region,mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    itemType = "index"
-    region = ""
+    itemType = "stock"
+    region = "HK"
     matlabBatch(itemType,region)

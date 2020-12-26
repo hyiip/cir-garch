@@ -1,6 +1,6 @@
 function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
     %Datatemp = Data(i:day+i-1); 
-    ssaveRow = zeros(1,10);
+    ssaveRow = NaN(1,10);
     x = Datatemp(1:end-1);
     dx = diff(Datatemp);
     delx = dx./x.^0.5;

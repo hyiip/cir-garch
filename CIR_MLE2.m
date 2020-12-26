@@ -26,7 +26,7 @@ function status =  CIR_MLE2(roll_expand,SD,MA,offset,itemName, itemType,mode)
 
     day = 750;
     count = 0 ;
-    ssave = zeros(m-day+1,10);
+    ssave = NaN(m-day+1,10);
 
     if offset <= -1
         startDay = 1;
