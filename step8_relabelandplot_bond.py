@@ -391,7 +391,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
         itemType = "stock"
-        region = "HK"
+        region = "US"
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)

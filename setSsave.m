@@ -21,6 +21,9 @@ function [ssaveRow,count] =  setSsave(Datatemp,count,TimeStep,lb,ub,bd)
     if isreal(guess) ~= 1
         return
     end
+	if any(Datatemp<0)
+		return
+	end
     try
         xo= mle(Datatemp,'nloglf', @myfun_O,'start', guess,'lowerbound',lb);
         while (abs(guess-xo)>bd)

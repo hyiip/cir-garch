@@ -165,5 +165,5 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
     itemType = "stock"
-    region = "HK"
+    region = "US"
     resultMerger(itemType,region)

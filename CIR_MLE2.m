@@ -3,12 +3,12 @@ function status =  CIR_MLE2(roll_expand,SD,MA,offset,itemName, itemType,mode)
     textHeader = strjoin(cHeader, ',');
     delimiterIn = ','; %use , as delimiter, some might use an ' ', depends on how to write your csv
     headerlinesIn = 1; %assuming first row is header
-
-    lb = [1e-5 1e-5 1e-5] ; 
-    ub = [100.0 10.0 10.0];        
+      
 
     TimeStep = 1;                       
     bd = 1e-6;
+    lb = [bd*10 bd*10 bd*10] ; 
+    ub = [100.0 10.0 10.0];  
     prefixString = sprintf("%s/updating/", itemType);
     locString = sprintf("%stoanalysis/SD%d/day%d/",prefixString, SD*100, MA);
     rawName = sprintf("bounded_%sday%d_SD%d_%s.csv",mode,MA,SD*100,itemName);

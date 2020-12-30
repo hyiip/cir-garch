@@ -88,5 +88,5 @@ def matlabUpdateMain(itemType , region,mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     itemType = "stock"
-    region = "HK"
+    region = "US"
     matlabUpdateMain(itemType,region)

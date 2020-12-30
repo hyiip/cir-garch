@@ -247,6 +247,6 @@ if __name__ == '__main__':
     #updateRaw(itemType,region)
     for mode in ["default"]:
         itemType = "stock"
-        region = "HK"
+        region = "US"
         updateRaw(itemType,region, mode = mode)
 
