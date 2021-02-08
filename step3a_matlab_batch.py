@@ -11,19 +11,16 @@ from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 from garch_utils.inputForm import inputForm
 import time
 
-def matlabRun(fullParams):
-    params = fullParams[0]
-    mode = fullParams[1]
-    rollexpand = params[0]
-    item = params[1]
-    SD = params[2]
-    day = params[3]
-    itemType = params[4]
-    try:
-        epsilon = str(float(params[5]))
-    except:
-        epsilon = 0
-    
+def matlabRun(params):
+    mode = params["mode"]
+    rollexpand = params["rollexpand"]
+    item = params["item"]
+    SD = params["SD"]
+    day = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
+    #print(params)
+
     info = pd.read_csv("{}/updating/{}info.csv".format(itemType,itemType),   index_col=0)
     offset = int(info.loc[item]["offset"]-1) #so for some reason matlab does not support numpy.int64, have to change it to python.int64
     #print( int(info.loc[item]["offset"]-1))
@@ -52,7 +49,13 @@ def matlabBatch(itemType,region,mode="default"):
     #indexList = getItemNameFromJson(itemType,region)
     tempList = getParameterListFromJson(itemType,region)
     modeList = ["roll"]
-    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
+    paramList = []
+    for a,b in itertools.product(modeList,tempList):
+        b["rollexpand"] = a
+        b["mode"] = mode
+        paramList.append(b)
+    #print([b["rollexpand"] = a] for)
+    #paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
     #withTypeList = [(n,s,d,itemType + region) for n, s, d in paramList]
     #paramList = (("2319.HK",2,30,"stockHK"),("2319.HK",2,60,"stockHK"))
     cpuCount = multiprocessing.cpu_count()
@@ -69,7 +72,7 @@ def matlabBatch(itemType,region,mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
-    for region in ["US"]:
-        itemType = "stock"
+    for region in [""]:
+        itemType = "ETF"
         #region = "HK"
         matlabBatch(itemType,region)

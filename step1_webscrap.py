@@ -39,6 +39,8 @@ def getCSV(itemName,itemType,start_date,end_date,newFlag):
         symbol = itemName + "=X"
     elif itemType == "vix":
         symbol = "^" + itemName
+    else:
+        symbol = itemName
     crumble_link = 'https://finance.yahoo.com/quote/{0}/history?p={0}'
     crumble_regex = r'CrumbStore":{"crumb":"(.*?)"}'
     cookie_regex = r'set-cookie: (.*?);'

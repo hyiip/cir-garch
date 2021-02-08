@@ -15,15 +15,12 @@ from garch_utils.inputForm import inputForm
 figsize=(20, 8)
 fontsize = 16
 def plotGraphSetting(params,result,setting,itemmode):
-    mode = params[0]
-    item = params[1]
-    SD = params[2]
-    MA = params[3]
-    itemType = params[4]
-    try:
-        epsilon = float(params[5])
-    except:
-        epsilon = 0
+    mode = params["rollexpand"]
+    item = params["item"]
+    SD = params["SD"]
+    MA = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
     '''column name: [result.columns[0],MA+"MA","Bank's Rate","S/S_A", "S_U", "S_L", "Band Width", "s","Leakage Ratio",
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
@@ -118,15 +115,13 @@ def plotGraphSetting(params,result,setting,itemmode):
     plt.close('all')
     return fig1
 def plotGraphParameter(params,result,parameter,itemmode):
-    mode = params[0]
-    item = params[1]
-    SD = params[2]
-    MA = params[3]
-    itemType = params[4]
-    try:
-        epsilon = float(params[5])
-    except:
-        epsilon = 0
+    mode = params["rollexpand"]
+    item = params["item"]
+    SD = params["SD"]
+    MA = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
+
     '''column name: [result.columns[0],MA+"MA","Bank's Rate","S/S_A", 'S_U', 'S_L', 'Band Width', "s","Leakage Ratio",
         "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
         "theta","theta_SE","theta_lb","theta_ub","theta_z",
@@ -198,18 +193,15 @@ def plotGraphParameter(params,result,parameter,itemmode):
     fig1.autofmt_xdate()
     return fig1
 
-def relabelAndPlot(fullParams):
-    params = fullParams[0]
-    itemmode = fullParams[1]
-    mode = params[0]
-    item = params[1]
-    SDint = params[2]
-    day = params[3]
-    itemType = params[4]
-    try:
-        epsilon = float(params[5])
-    except:
-        epsilon = 0
+def relabelAndPlot(params):
+    itemmode = params["mode"]
+    mode = params["rollexpand"]
+    item = params["item"]
+    SDint = params["SD"]
+    day = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
+
     MA = str(day)
     SD = str(int(SDint*100))
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
@@ -321,15 +313,13 @@ def relabelAndPlot(fullParams):
     
 
 def tablePlot(params):
-    mode = params[0]
-    item = params[1]
-    SDint = params[2]
-    day = params[3]
-    itemType = params[4]
-    try:
-        epsilon = float(params[5])
-    except:
-        epsilon = 0
+    mode = params["rollexpand"]
+    item = params["item"]
+    SDint = params["SD"]
+    day = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
+
     MA = str(day)
     SD = str(int(SDint*100))
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
@@ -377,7 +367,11 @@ def tablePlot(params):
 def merger(itemType , region, mode="hybrid"):
     tempList = getParameterListFromJson(itemType,region,mode = "plot")
     modeList = ["roll"]
-    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
+    paramList = []
+    for a,b in itertools.product(modeList,tempList):
+        b["rollexpand"] = a
+        b["mode"] = mode
+        paramList.append(b)
 
     cpuCount = multiprocessing.cpu_count()
     #print(cpuCount)
@@ -390,8 +384,8 @@ def merger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
-        itemType = "stock"
-        region = "US"
+        itemType = "ETF"
+        region = ""
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)

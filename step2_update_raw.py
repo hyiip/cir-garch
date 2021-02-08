@@ -60,14 +60,13 @@ def setUSDHKD(itemType):
 
 def processRaw(params,itemType, mode = "curr"):
     print(mode)
-    item = params[0]
-    SD = params[1]
-    day = params[2]
+    item = params["item"]
+    SD = params["SD"]
+    day = params["day"]
     print(params)
-    try:
-        epsilon = float(params[4])
-    except:
-        epsilon = 0
+    epsilon = float(params["tor"])
+    boundLoc = params["boundLoc"]
+
     averagedate = day
     MAname = "{}MA".format(day)
     SDstring = int(SD*100)
@@ -189,6 +188,14 @@ def processRaw(params,itemType, mode = "curr"):
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
         testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+    elif boundLoc == "lower":
+        SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
+        SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
+        testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) ) 
+    elif boundLoc == "upper":
+        SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
+        SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
+        testSeries = ( (Si.iloc[:,0] - SL) / (SU - SL) ) 
     else:
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
@@ -246,7 +253,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
     for mode in ["default"]:
-        itemType = "stock"
-        region = "US"
+        itemType = "ETF"
+        region = ""
         updateRaw(itemType,region, mode = mode)
 

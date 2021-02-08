@@ -11,18 +11,14 @@ from garch_utils.getList import getItemNameFromJson,getParameterListFromJson
 from garch_utils.inputForm import inputForm
  
 
-def resultmerge(fullParams):
-    params = fullParams[0]
-    itemmode = fullParams[1]
-    mode = params[0]
-    item = params[1]
-    SDint = params[2]
-    day = params[3]
-    itemType = params[4]
-    try:
-        epsilon = float(params[5])
-    except:
-        epsilon = 0
+def resultmerge(params):
+    itemmode = params["mode"]
+    mode = params["rollexpand"]
+    item = params["item"]
+    SDint = params["SD"]
+    day = params["day"]
+    itemType = params["itemType"]
+    epsilon = float(params["tor"])
     
     MA = str(day)
     SD = str(int(SDint*100))
@@ -156,7 +152,11 @@ def resultmerge(fullParams):
 def resultMerger(itemType , region, mode="default"):
     tempList = getParameterListFromJson(itemType,region)
     modeList = ["roll"]
-    paramList = [((a,*b),mode) for a,b in itertools.product(modeList,tempList)]
+    paramList = []
+    for a,b in itertools.product(modeList,tempList):
+        b["rollexpand"] = a
+        b["mode"] = mode
+        paramList.append(b)
     for param in paramList:
         resultmerge(param)
     return 0
@@ -164,6 +164,6 @@ def resultMerger(itemType , region, mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    itemType = "stock"
-    region = "US"
+    itemType = "ETF"
+    region = ""
     resultMerger(itemType,region)

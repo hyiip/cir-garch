@@ -66,10 +66,19 @@ def getParameterListFromJson(itemType,region,mode = "normal"):
     with open(filename) as f:
         data = json.load(f)
         itemList = [f[itemType] for f in data]
-        if "bondfloat" not in itemType:
-            parameter = [(item["name"], para["SD"], para["day"], itemType+region) for item in itemList for para in item["parameter"]]
-        else:
-            parameter = [(item["name"], para["SD"], para["day"], itemType+region, para["tor"]) for item in itemList for para in item["parameter"]]
+        parameter = []
+        for item in itemList:
+            for para in item["parameter"]:
+                parameter.append(
+                    {
+                        "item": item["name"],
+                        "SD" : para["SD"],
+                        "day" : para["day"],
+                        "itemType" : itemType+region,
+                        "boundLoc" : item.get("boundLoc","default"),
+                        "tor" : item.get("tor",0)
+                    }
+                )
 
     return parameter
 def inputForm():
