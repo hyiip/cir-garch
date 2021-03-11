@@ -253,7 +253,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
     for mode in ["default"]:
-        itemType = "ETF"
+        itemType = "index"
         region = ""
         updateRaw(itemType,region, mode = mode)
 

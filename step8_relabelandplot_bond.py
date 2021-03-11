@@ -384,7 +384,7 @@ def merger(itemType , region, mode="hybrid"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
-        itemType = "ETF"
+        itemType = "index"
         region = ""
         #itemType = "vixir"
         #region = ""

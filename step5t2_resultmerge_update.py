@@ -164,6 +164,6 @@ def resultMerger(itemType , region, mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    itemType = "ETF"
+    itemType = "index"
     region = ""
     resultMerger(itemType,region)

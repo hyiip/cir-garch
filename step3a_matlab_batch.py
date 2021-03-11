@@ -34,6 +34,7 @@ def matlabRun(params):
         mode = mode + "_"
     inp = (rollexpand,SD,day,offset,item,itemType,mode)
     print(inp)
+    1/0
     eng = matlab.engine.start_matlab()
     
     if not epsilon == 0:
@@ -73,6 +74,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
     for region in [""]:
-        itemType = "ETF"
+        itemType = "index"
         #region = "HK"
         matlabBatch(itemType,region)
