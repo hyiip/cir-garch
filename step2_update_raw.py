@@ -10,7 +10,7 @@ import itertools
 import warnings
 from garch_utils.inputForm import inputForm
 import logging
-
+summary = []
 def extractRaw(itemList,itemType):
     filepath = {
         "removed": "{}/updating/raw/".format(itemType),
@@ -69,7 +69,7 @@ def processRaw(params,itemType, mode = "curr"):
 
     averagedate = day
     MAname = "{}MA".format(day)
-    SDstring = int(SD*100)
+    SDstring = int(round(SD*100))
     filestring = "tor{}_day{}_SD{}_".format(epsilon,day,SDstring)
     
     names = item + ".csv"
@@ -105,8 +105,11 @@ def processRaw(params,itemType, mode = "curr"):
     Si = Si.dropna() #remove null values
 
     Sm = Si.rolling(window=averagedate).mean() #rolling mean of <averagedate> data
+    SSD = Si.rolling(window=averagedate).std(ddof=0) #rolling mean of <averagedate> data
     Sm = Sm.dropna()
+    SSD = SSD.dropna()
     Sm.columns = [MAname]
+    SSD.columns = ["SD"]
     Si = Si.drop(Si.index[0:averagedate-1]) #match two index#
 
     normalize = Si.div(Sm[MAname], axis='index') 
@@ -196,6 +199,10 @@ def processRaw(params,itemType, mode = "curr"):
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
         testSeries = ( (Si.iloc[:,0] - SL) / (SU - SL) ) 
+    elif boundLoc == "SD":
+        SU = pd.Series(Sm[MAname] + SD * SSD["SD"], name = "S_U")
+        SL = pd.Series(Sm[MAname] - SD * SSD["SD"], name = "S_L")
+        testSeries = ( (SU - Si.iloc[:,0]) / (SU - SL) )
     else:
         SU = pd.Series(Sm[MAname]*(1+0.25*SD), name = "S_U")
         SL = pd.Series(Sm[MAname]*(1-0.25*SD), name = "S_L")
@@ -218,11 +225,26 @@ def processRaw(params,itemType, mode = "curr"):
     transformed.columns = ["bounded_x"]
     #transformed_raw.columns = ["bounded_x_raw"]
 
-    table = pd.concat([Si, Sm, normalize,SU,SL,transformed], axis=1)
-    colname = list(table.columns)
-    colname[3] = "S_U"
-    colname[4] = "S_L"
-    table.columns = colname
+    if boundLoc == "SD":
+        table = pd.concat([Si, Sm, SSD ,SU,SL,transformed], axis=1)
+        colname = list(table.columns)
+        colname[3] = "S_U"
+        colname[4] = "S_L"
+        table.columns = colname
+        
+        ### before transform > 1, after transformation negative -? quasi bouned
+        # minRow = table.loc[testSeries.idxmax()]
+        # maxRow = table.loc[testSeries.idxmin()]
+        # maxSD =  (maxRow[0] - maxRow[MAname]) / maxRow["SD"]
+        # minSD = -(minRow[0] - minRow[MAname]) / minRow["SD"]
+        # resultDict = {"name": item,"MA": day, "maxSD" : maxSD, "minSD": minSD }
+        # summary.append(resultDict)
+    else:
+        table = pd.concat([Si, Sm, normalize,SU,SL,transformed], axis=1)
+        colname = list(table.columns)
+        colname[3] = "S_U"
+        colname[4] = "S_L"
+        table.columns = colname
     #table.rename(columns={ table.columns[4]: "S_U" }, inplace = True)
     transformed.to_csv(filepath["toanalysis"] + "bounded_" + filestring + names, sep=",", index=True)
     table.to_csv(filepath["table"] + filestring + names, sep=",", index=True)
@@ -246,6 +268,9 @@ def updateRaw(itemType,region,mode):
         processRaw(param,itemType + region,mode)
 
     print("processRaw done")
+    #betterSummary = [dict(t) for t in {tuple(d.items()) for d in summary}]
+    #summaryDF = pd.DataFrame(betterSummary)
+    #summaryDF.to_csv("bondSDlimit.csv")
     return 0
     
 
@@ -253,7 +278,7 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #updateRaw(itemType,region)
     for mode in ["default"]:
-        itemType = "index"
-        region = ""
+        itemType = "bondSD"
+        region = "GER"
         updateRaw(itemType,region, mode = mode)
 

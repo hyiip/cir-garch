@@ -10,11 +10,11 @@ function status =  CIR_MLE2(roll_expand,SD,MA,offset,itemName, itemType,mode)
     lb = [bd*10 bd*10 bd*10] ; 
     ub = [100.0 10.0 10.0];  
     prefixString = sprintf("%s/updating/", itemType);
-    locString = sprintf("%stoanalysis/SD%d/day%d/",prefixString, SD*100, MA);
-    rawName = sprintf("bounded_%sday%d_SD%d_%s.csv",mode,MA,SD*100,itemName);
+    locString = sprintf("%stoanalysis/SD%d/day%d/",prefixString, round(SD*100), MA);
+    rawName = sprintf("bounded_%sday%d_SD%d_%s.csv",mode,MA,round(SD*100),itemName);
     filename = sprintf("%s%s",locString,rawName);
-    rollPath = sprintf("%stemp/new/SD%d/day%d/roll/",prefixString,SD*100, MA);
-    expandPath = sprintf("%stemp/new/SD%d/day%d/expand/",prefixString,SD*100, MA);
+    rollPath = sprintf("%stemp/new/SD%d/day%d/roll/",prefixString,round(SD*100), MA);
+    expandPath = sprintf("%stemp/new/SD%d/day%d/expand/",prefixString,round(SD*100), MA);
     if ~exist(char(rollPath),'dir') mkdir(char(rollPath)); end
     if ~exist(char(expandPath),'dir') mkdir(char(expandPath)); end
     resultname_roll = sprintf("%scir_roll_%s",rollPath,rawName);

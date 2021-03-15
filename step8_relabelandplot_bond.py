@@ -203,14 +203,14 @@ def relabelAndPlot(params):
     epsilon = float(params["tor"])
 
     MA = str(day)
-    SD = str(int(SDint*100))
+    SD = str(int(round(SDint*100)))
+    boundLoc = params["boundLoc"]
     pathString = "SD{}/day{}/{}/".format(SD,MA,mode)
     #itemmode = itemType.replace("bond","").replace("GER","")
     if itemmode not in ["upper","lower"]:
         itemmode = ""
     else:
         itemmode =  itemmode
-    
     if not epsilon == 0:
         filepath = {
             "graph": "{itemType}/updating/graph/{item}/SD{SDint}day{day}tol{epsilon}/{mode}/".format(itemType = itemType,item = item,SDint = SDint,day = day,epsilon = epsilon,mode = mode),
@@ -238,6 +238,10 @@ def relabelAndPlot(params):
                 }
 
         if "bond" not in itemType:
+            resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
+            graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
+            infographName = "{}_SD{}day{}".format(item,SDint,day)
+        elif ("bond" in itemType) and (boundLoc == "SD"):
             resultFile = "{}_day{}_SD{}_{}.csv".format(mode,MA,SD,item)
             graphName = "{}_{}_SD{}day{}".format(mode,item,SDint,day)
             infographName = "{}_SD{}day{}".format(item,SDint,day)
@@ -275,6 +279,8 @@ def relabelAndPlot(params):
     
     if itemType == "exchange":
         setting = ["main","s","leakage", "pct_change"]
+    elif boundLoc == "SD":
+        setting = ["main","s","leakage"]
     else:
         setting = ["main","s","leakage","normalize", "pct_change"]
     
@@ -377,15 +383,15 @@ def merger(itemType , region, mode="hybrid"):
     #print(cpuCount)
     pool = multiprocessing.Pool(processes=cpuCount)
     pool.map(relabelAndPlot,paramList)
-    #for param in paramList:
-    #    relabelAndPlot(param)
+    # for param in paramList:
+    #     relabelAndPlot(param)
     return 0
         
 if __name__ == '__main__':
     #itemType, region = inputForm()
     for mode in ["default"]:
-        itemType = "index"
-        region = ""
+        itemType = "bondSD"
+        region = "GER"
         #itemType = "vixir"
         #region = ""
         merger(itemType,region, mode = mode)

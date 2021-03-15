@@ -21,7 +21,8 @@ def resultmerge(params):
     epsilon = float(params["tor"])
     
     MA = str(day)
-    SD = str(int(SDint*100))
+    SD = str(int(round(SDint*100)))
+    boundLoc = params["boundLoc"]
     
     #xlsxPath = "all/excel/"
     #Path(xlsxPath).mkdir(parents=True, exist_ok=True)
@@ -96,7 +97,30 @@ def resultmerge(params):
         "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
         "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
     '''
-    if itemmode not in ["upper","lower"]:
+    if boundLoc == "SD":
+        if "bond" in itemType:
+            all = all[[all.columns[0],MA+"MA","Bank","SD", 'S_U', 'S_L', "bounded_x","cir_leakage", 
+                "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
+                "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
+                "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
+
+            #all.rename(columns={'bounded_x': 'x'}, inplace=True)
+            all.columns = [all.columns[0],MA+"MA","Bank's Rate","SD", 'S_U', 'S_L', "s","Leakage Ratio", 
+            "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
+            "theta","theta_SE","theta_lb","theta_ub","theta_z",
+            "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
+        else:
+            all = all[[all.columns[0],MA+"MA","SD", 'S_U', 'S_L', "bounded_x","cir_leakage", 
+                "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
+                "cir_theta","cir_theta_sd","cir_theta_lb","cir_theta_ub","cir_theta_z",
+                "cir_sigma","cir_sigma_sd","cir_sigma_lb","cir_sigma_ub","cir_sigma_z"]]
+
+            #all.rename(columns={'bounded_x': 'x'}, inplace=True)
+            all.columns = [all.columns[0],MA+"MA","SD", 'S_U', 'S_L', "s","Leakage Ratio", 
+            "kappa","kappa_SE","kappa_lb","kappa_ub","kappa_z",
+            "theta","theta_SE","theta_lb","theta_ub","theta_z",
+            "sigma","sigma_SE","sigma_lb","sigma_ub","sigma_z"]
+    elif itemmode not in ["upper","lower"]:
         if ("bond" not in itemType):
             all = all[[all.columns[0],MA+"MA","Normalize", 'S_U', 'S_L', "bounded_x","cir_leakage", "pct_change", 
                 "cir_kappa","cir_kappa_sd","cir_kappa_lb","cir_kappa_ub","cir_kappa_z",
@@ -164,6 +188,6 @@ def resultMerger(itemType , region, mode="default"):
 if __name__ == '__main__':
     #itemType, region = inputForm()
     #resultMerger(itemType , region)
-    itemType = "index"
-    region = ""
+    itemType = "bondSD"
+    region = "GER"
     resultMerger(itemType,region)

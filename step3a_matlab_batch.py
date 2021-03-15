@@ -25,7 +25,7 @@ def matlabRun(params):
     offset = int(info.loc[item]["offset"]-1) #so for some reason matlab does not support numpy.int64, have to change it to python.int64
     #print( int(info.loc[item]["offset"]-1))
     #offset = -1
-    #1/0
+    
     #print(item, SD, day, offset)
     #mode = itemType.replace("bond","").replace("GER","")
     if mode not in ["upper","lower"]:
@@ -34,7 +34,7 @@ def matlabRun(params):
         mode = mode + "_"
     inp = (rollexpand,SD,day,offset,item,itemType,mode)
     print(inp)
-    1/0
+
     eng = matlab.engine.start_matlab()
     
     if not epsilon == 0:
@@ -74,6 +74,6 @@ if __name__ == '__main__':
     #itemType, region = inputForm()
     #matlabBatch(itemType , region)
     for region in [""]:
-        itemType = "index"
-        #region = "HK"
+        itemType = "bondSD"
+        region = "GER"
         matlabBatch(itemType,region)

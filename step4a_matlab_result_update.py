@@ -22,7 +22,7 @@ def matlabUpdate(params):
     epsilon = float(params["tor"])
     
     MA = str(day)
-    SD = str(int(SDint*100))
+    SD = str(int(round(SDint*100)))
     #itemmode = itemType.replace("bond","").replace("GER","")
     if itemmode not in ["upper","lower"]:
         itemmode = ""
@@ -87,6 +87,6 @@ def matlabUpdateMain(itemType , region,mode="default"):
     
 if __name__ == '__main__':
     #itemType, region = inputForm()
-    itemType = "index"
-    region = ""
+    itemType = "bondSD"
+    region = "GER"
     matlabUpdateMain(itemType,region)

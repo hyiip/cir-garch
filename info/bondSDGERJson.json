@@ -1,0 +1,74 @@
+[
+	{
+        "bondSD": {
+            "name": "F91002Y",
+			"boundLoc" : "SD",
+            "parameter": [
+                {
+                    "SD": 5,
+                    "day": 30
+                },
+                {
+                    "SD": 6.5,
+                    "day": 50
+                },
+				{
+                    "SD": 5.5,
+                    "day": 90
+                },
+				{
+                    "SD": 5.5,
+                    "day": 120
+                }
+            ]
+        }
+    },
+    {
+        "bondSD": {
+            "name": "F91003M",
+			"boundLoc" : "SD",
+            "parameter": [
+                {
+                    "SD": 5.5,
+                    "day": 30
+                },
+                {
+                    "SD": 6,
+                    "day": 50
+                },
+				{
+                    "SD": 6.5,
+                    "day": 90
+                },
+				{
+                    "SD": 5.5,
+                    "day": 120
+                }
+            ]
+        }
+    },
+    {
+        "bondSD": {
+            "name": "F91010Y",
+			"boundLoc" : "SD",
+            "parameter": [
+                {
+                    "SD": 4,
+                    "day": 30
+                },
+                {
+                    "SD": 4.5,
+                    "day": 50
+                },
+				{
+                    "SD": 4,
+                    "day": 90
+                },
+				{
+                    "SD": 4.5,
+                    "day": 120
+                }
+            ]
+        }
+    }
+]
